@@ -301,3 +301,13 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# DIY
+Debug.win32/
+Release.win32/
+ipch/
+DeBugMsg.txt
+CatchMsgFile.txt
+MiniDump.dmp
+name1.mp4
+name2.mp4
