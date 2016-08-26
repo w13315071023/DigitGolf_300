@@ -3,7 +3,8 @@
 
 extern int instenceTarget = 140;
 extern int Ext_StepNum = 10;
-extern INT	Ext_cameraNum = 0; 
+extern int Ext_FFmpegStep = 1;
+extern INT Ext_cameraNum = 0; 
 extern int Ext_VideoSize = 0;
 extern int Ext_VideoSleep = 1000;
 extern int Ext_SerialThreshold = 800;

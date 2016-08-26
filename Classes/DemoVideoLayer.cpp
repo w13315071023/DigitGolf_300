@@ -23,13 +23,13 @@ DemoVideoLayer::DemoVideoLayer()
 
 DemoVideoLayer::~DemoVideoLayer()
 {
-	if (!m_DemoVideoList.empty())
+	if (!m_VideoList.empty())
 	{
-		m_DemoVideoIter = m_DemoVideoList.begin();
-		for (m_DemoVideoIter; m_DemoVideoIter != m_DemoVideoList.end(); m_DemoVideoIter++)
+		for (int i = 0;i < m_VideoList.size(); i++)
 		{
-			av_free(*m_DemoVideoIter);
+			av_free(m_VideoList[i]);
 		}
+		m_VideoIndex = 0;
 	}
 }
 bool DemoVideoLayer::init(int Direction)
@@ -51,7 +51,7 @@ bool DemoVideoLayer::init(int Direction)
 		DataMager::shareDataMager()->m_curCuetype,
 		Direction);
 	this->LoadVideo();
-	this->ShowDemoVideo();
+	this->ShowVideo();
 	CCSprite* beijing2 = CCSprite::create("VideoUI/beijing2.png");
 	beijing2->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
 	this->addChild(beijing2);
@@ -136,7 +136,7 @@ bool DemoVideoLayer::LoadVideo()
 				m_Width = pCodecCtx->width;
 				m_Height = pCodecCtx->height;
 				unsigned char* pVideoRGB24 = buf;
-				m_DemoVideoList.push_back(pVideoRGB24);
+				m_VideoList.push_back(pVideoRGB24);
 
 				sws_scale(
 					pSwsCtx,
@@ -150,8 +150,8 @@ bool DemoVideoLayer::LoadVideo()
 		}
 		av_packet_unref(&packet);
 	}
-	m_DemoVideoIter = m_DemoVideoList.begin();
-	Ext_VideoSize = m_DemoVideoList.size();
+	m_VideoIndex = 0;
+	Ext_VideoSize = m_VideoList.size();
 
 	sws_freeContext(pSwsCtx);
 	av_free(pFrame);

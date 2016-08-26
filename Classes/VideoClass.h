@@ -10,16 +10,12 @@ public:
 	bool m_IsRecord;
 	float m_Width;
 	float m_Height;
-	vector<unsigned char*> m_DemoVideoList;
-	vector<unsigned char*>::iterator m_DemoVideoIter;
-	vector<VideoRAW*> m_VideoList;
-	vector<VideoRAW*>::iterator m_VideoIter;
+	vector<unsigned char*> m_VideoList;
+	int m_VideoIndex;
 public:
 	VideoClass(void);
 	virtual ~VideoClass(void);
 	void ShowVideo();
-	void ShowDemoVideo();
-	void ReSetDemoVideo();
 	void ReSetVideo();
 };
 

@@ -12,12 +12,13 @@ MovieVideoLayer::~MovieVideoLayer()
 	av_free(m_pFrameImageRGB);
 	if (!m_VideoList.empty())
 	{
-		m_VideoIter = m_VideoList.begin();
-		for (m_VideoIter; m_VideoIter != m_VideoList.end(); m_VideoIter++)
+		
+		for (int i = 0; i < m_VideoList.size();i++)
 		{
-			av_free((*m_VideoIter)->FrameData);
+			av_free(m_VideoList[i]);
 		}
 		m_VideoList.clear();
+		m_VideoIndex = 0;
 	}
 }
 SwsContext* MovieVideoLayer::pSwsCtx = NULL;
@@ -77,9 +78,8 @@ bool MovieVideoLayer::init(int Direction)
 
 	for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum; i++)
 	{
-		VideoRAW* pVideoRGB24 = new VideoRAW();
-		pVideoRGB24->FrameData = (unsigned char*)av_malloc(m_Camera->BufferSize);
-		m_VideoList.push_back(pVideoRGB24);
+		unsigned char* FrameData = (unsigned char*)av_malloc(m_Camera->BufferSize);
+		m_VideoList.push_back(FrameData);
 	}
 	
 	m_pFrameImageRGB = (unsigned char*)av_malloc(m_Camera->BufferSize);
@@ -143,8 +143,7 @@ void MovieVideoLayer::TransData()
 			m_Camera->getBufferByIndex(curIndex)->FrameData,
 			m_pFrameImageRGB,
 			&m_FrameImageHead);
-		swap(m_pFrameImageRGB, m_VideoList[m_TransIndex]->FrameData);
-		m_VideoList[m_TransIndex]->FrameHead = m_FrameImageHead;
+		swap(m_pFrameImageRGB, m_VideoList[m_TransIndex]);
 		m_TransIndex ++;
 	}
 	
@@ -169,8 +168,7 @@ void MovieVideoLayer::RecordOk()
 				m_Camera->getBufferByIndex(curIndex)->FrameData,
 				m_pFrameImageRGB,
 				&m_FrameImageHead);
-			swap(m_pFrameImageRGB, m_VideoList[i]->FrameData);
-			m_VideoList[i]->FrameHead = m_FrameImageHead;
+			swap(m_pFrameImageRGB, m_VideoList[i]);
 		}
 		catch (...)
 		{
@@ -179,7 +177,7 @@ void MovieVideoLayer::RecordOk()
 			fclose(CatchMsgFile);
 		}
 	}
-	m_VideoIter = m_VideoList.begin();
+	m_VideoIndex = 0;
 }
 void MovieVideoLayer::ResetVideoSize()
 {
@@ -189,7 +187,7 @@ void MovieVideoLayer::ResetVideoSize()
 		curVideoSize = m_VideoList.size();
 		for (size_t i = 0; i < curVideoSize - Ext_VideoSize * Ext_StepNum; i++)
 		{
-			av_free(m_VideoList.back()->FrameData);
+			av_free(m_VideoList.back());
 			m_VideoList.pop_back();
 		}
 	}
@@ -197,9 +195,8 @@ void MovieVideoLayer::ResetVideoSize()
 	{
 		for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum - curVideoSize; i++)
 		{
-			VideoRAW* pVideoRGB24 = new VideoRAW();
-			pVideoRGB24->FrameData = (unsigned char*)malloc(MovieVideoLayer::m_Camera1->BufferSize);
-			m_VideoList.push_back(pVideoRGB24);
+			unsigned char* FrameData = (unsigned char*)malloc(MovieVideoLayer::m_Camera1->BufferSize);
+			m_VideoList.push_back(FrameData);
 		}
 	}
 }
@@ -242,7 +239,7 @@ void MovieVideoLayer::Add_audio_viode_stream(OutputStream* viode_st, OutputStrea
 }
 void MovieVideoLayer::fill_yuv_image(int imageInx)
 {
-	avpicture_fill((AVPicture*)m_pRGBFrame, (uint8_t*)m_VideoList[imageInx]->FrameData, AV_PIX_FMT_BGR24, m_VideoList[imageInx]->FrameHead.iWidth, m_VideoList[imageInx]->FrameHead.iHeight);
+	avpicture_fill((AVPicture*)m_pRGBFrame, (uint8_t*)m_VideoList[imageInx], AV_PIX_FMT_BGR24, m_Width, m_Height);
 
 	m_pRGBFrame->data[0] += m_pRGBFrame->linesize[0] * (480 - 1);
 	m_pRGBFrame->linesize[0] *= -1;
@@ -346,12 +343,12 @@ void MovieVideoLayer::SeveVideo()
 	}
 	ret = avformat_write_header(fmt_ctx, NULL);
 
-	for (size_t i = 0; i < m_VideoList.size(); i++)
+	for (size_t i = 0; i < m_VideoList.size()/Ext_FFmpegStep; i++)
 	{
 		AVPacket pkt;
 		av_init_packet(&pkt);
 		ret = av_frame_make_writable(video_st.videoFrame);
-		fill_yuv_image(i);
+		fill_yuv_image(i*Ext_FFmpegStep);
 
 		video_st.videoFrame->pts = video_st.next_pts++;
 

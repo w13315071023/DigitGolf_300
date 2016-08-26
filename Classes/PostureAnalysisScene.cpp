@@ -60,6 +60,7 @@ bool PostureAnalysisScene::init()
 	printf("³õÊ¼»¯PostureAnalysisScene\n");
 	m_curMenuTag = MENUTAG_FourView;
 	m_curMsg = 0;
+	m_StepIndex = Ext_StepNum;
 	m_curSingle = 1.5f / 60.0f;
 	m_bIsPlayVideo = false;
 	m_bIsStepPlay = false;
@@ -610,13 +611,18 @@ void PostureAnalysisScene::Update(float dt)
 	SerialMager::getInstence()->SeriaUpdate();
 	if (m_bIsPlayVideo == true)
 	{
-		if (!m_pFrontDemoVideoLayer->m_IsPlayOver)
+		m_StepIndex--;
+		if(m_StepIndex <= 0)
 		{
-			m_pFrontDemoVideoLayer->ShowDemoVideo();
-		}
-		if (Ext_cameraNum == 2 && !m_pSideDemoVideoLayer->m_IsPlayOver)
-		{
-			m_pSideDemoVideoLayer->ShowDemoVideo();
+			if (!m_pFrontDemoVideoLayer->m_IsPlayOver)
+			{
+				m_pFrontDemoVideoLayer->ShowVideo();
+			}
+			if (Ext_cameraNum == 2 && !m_pSideDemoVideoLayer->m_IsPlayOver)
+			{
+				m_pSideDemoVideoLayer->ShowVideo();
+			}
+			m_StepIndex = Ext_StepNum;
 		}
 		if (Ext_cameraNum &&!m_pFrontMovieVideoLayer->m_IsPlayOver)
 		{
@@ -651,11 +657,11 @@ void PostureAnalysisScene::Update(float dt)
 			}
 			else
 			{
-				m_pFrontDemoVideoLayer->ReSetDemoVideo();
+				m_pFrontDemoVideoLayer->ReSetVideo();
 				m_pFrontMovieVideoLayer->ReSetVideo();
 				if (Ext_cameraNum == 2)
 				{
-					m_pSideDemoVideoLayer->ReSetDemoVideo();
+					m_pSideDemoVideoLayer->ReSetVideo();
 					m_pSideMovieVideoLayer->ReSetVideo();
 				}
 				m_bIsPlayVideo = false;
@@ -708,28 +714,49 @@ void PostureAnalysisScene::CallbackREW(CCObject* pSender)
 		pToggle->setSelectedIndex(0);
 		this->CallbackPause(pToggle);
 	}
-	for (size_t i = 0; i < Ext_StepNum; i++)
-	{
-		if (!m_pFrontDemoVideoLayer->m_IsPlayOver&&m_pFrontDemoVideoLayer->m_DemoVideoIter != m_pFrontDemoVideoLayer->m_DemoVideoList.begin())
+	//for (size_t i = 0; i < Ext_StepNum; i++)
+	//{
+	//	if (!m_pFrontDemoVideoLayer->m_IsPlayOver&&m_pFrontDemoVideoLayer->m_DemoVideoIter != m_pFrontDemoVideoLayer->m_DemoVideoList.begin())
+	//	{
+	//		m_pFrontDemoVideoLayer->m_DemoVideoIter--;
+	//	}
+	//	if (Ext_cameraNum == 2 && !m_pSideDemoVideoLayer->m_IsPlayOver&&m_pSideDemoVideoLayer->m_DemoVideoIter != m_pSideDemoVideoLayer->m_DemoVideoList.begin())
+	//	{
+	//		m_pSideDemoVideoLayer->m_DemoVideoIter--;
+	//	}
+	//}
+	//for (size_t i = 0; i < Ext_StepNum*2; i++)
+	//{
+	//	if (Ext_cameraNum &&!m_pFrontMovieVideoLayer->m_IsPlayOver&&m_pFrontMovieVideoLayer->m_VideoIter != m_pFrontMovieVideoLayer->m_VideoList.begin())
+	//	{
+	//		m_pFrontMovieVideoLayer->m_VideoIter--;
+	//	}
+	//	if (Ext_cameraNum == 2 && !m_pSideMovieVideoLayer->m_IsPlayOver&&m_pSideMovieVideoLayer->m_VideoIter != m_pSideMovieVideoLayer->m_VideoList.begin())
+	//	{
+	//		m_pSideMovieVideoLayer->m_VideoIter--;
+	//	}
+	//}
+
+		if (Ext_cameraNum &&!m_pFrontMovieVideoLayer->m_IsPlayOver&&m_pFrontMovieVideoLayer->m_VideoIndex < m_pFrontMovieVideoLayer->m_VideoList.size())
 		{
-			m_pFrontDemoVideoLayer->m_DemoVideoIter--;
+			m_pFrontMovieVideoLayer->m_VideoIndex-=2;
 		}
-		if (Ext_cameraNum == 2 && !m_pSideDemoVideoLayer->m_IsPlayOver&&m_pSideDemoVideoLayer->m_DemoVideoIter != m_pSideDemoVideoLayer->m_DemoVideoList.begin())
+		if (Ext_cameraNum == 2 && !m_pSideMovieVideoLayer->m_IsPlayOver&&m_pSideMovieVideoLayer->m_VideoIndex < m_pSideMovieVideoLayer->m_VideoList.size())
 		{
-			m_pSideDemoVideoLayer->m_DemoVideoIter--;
+			m_pSideMovieVideoLayer->m_VideoIndex-=2;
 		}
-	}
-	for (size_t i = 0; i < Ext_StepNum*2; i++)
-	{
-		if (Ext_cameraNum &&!m_pFrontMovieVideoLayer->m_IsPlayOver&&m_pFrontMovieVideoLayer->m_VideoIter != m_pFrontMovieVideoLayer->m_VideoList.begin())
+
+		int VideoTempIndex = m_pFrontMovieVideoLayer->m_VideoIndex / Ext_StepNum;
+
+		if (!m_pFrontDemoVideoLayer->m_IsPlayOver&&m_pFrontDemoVideoLayer->m_VideoIndex < m_pFrontDemoVideoLayer->m_VideoList.size())
 		{
-			m_pFrontMovieVideoLayer->m_VideoIter--;
+			m_pFrontDemoVideoLayer->m_VideoIndex = VideoTempIndex;
 		}
-		if (Ext_cameraNum == 2 && !m_pSideMovieVideoLayer->m_IsPlayOver&&m_pSideMovieVideoLayer->m_VideoIter != m_pSideMovieVideoLayer->m_VideoList.begin())
+		if (Ext_cameraNum == 2 && !m_pSideDemoVideoLayer->m_IsPlayOver&&m_pSideDemoVideoLayer->m_VideoIndex < m_pSideDemoVideoLayer->m_VideoList.size())
 		{
-			m_pSideMovieVideoLayer->m_VideoIter--;
+			m_pSideDemoVideoLayer->m_VideoIndex = VideoTempIndex;
 		}
-	}
+
 	this->Update(0);
 }
 void PostureAnalysisScene::CallbackFF(CCObject* pSender)
@@ -754,11 +781,11 @@ void PostureAnalysisScene::CallbackRePlay(CCObject* pSender)
 	{
 		m_bIsPlayVideo = false;
 
-		m_pFrontDemoVideoLayer->ReSetDemoVideo();
+		m_pFrontDemoVideoLayer->ReSetVideo();
 		m_pFrontMovieVideoLayer->ReSetVideo();
 		if (Ext_cameraNum == 2)
 		{
-			m_pSideDemoVideoLayer->ReSetDemoVideo();
+			m_pSideDemoVideoLayer->ReSetVideo();
 			m_pSideMovieVideoLayer->ReSetVideo();
 		}
 		if (m_bIsStepPlay == true)
@@ -808,7 +835,7 @@ void PostureAnalysisScene::CallbackPause(CCObject* pSender)
 		}
 		else
 		{
-			m_pFrontDemoVideoLayer->ReSetDemoVideo();
+			m_pFrontDemoVideoLayer->ReSetVideo();
 			m_pFrontMovieVideoLayer->ReSetVideo();
 			m_pFrontDemoVideoLayer->m_IsPlayOver = false;
 			m_pFrontMovieVideoLayer->m_IsPlayOver = false;
@@ -816,7 +843,7 @@ void PostureAnalysisScene::CallbackPause(CCObject* pSender)
 			{
 				m_pSideDemoVideoLayer->m_IsPlayOver = false;
 				m_pSideMovieVideoLayer->m_IsPlayOver = false;
-				m_pSideDemoVideoLayer->ReSetDemoVideo();
+				m_pSideDemoVideoLayer->ReSetVideo();
 				m_pSideMovieVideoLayer->ReSetVideo();
 			}
 			m_bIsPlayVideo = true;
@@ -831,11 +858,11 @@ void PostureAnalysisScene::CallbackPause(CCObject* pSender)
 }
 void PostureAnalysisScene::CallbackPreview(CCObject* pSender)
 {
-	m_pFrontDemoVideoLayer->ReSetDemoVideo();
+	m_pFrontDemoVideoLayer->ReSetVideo();
 	m_pFrontMovieVideoLayer->ReSetVideo();
 	if (Ext_cameraNum == 2)
 	{
-		m_pSideDemoVideoLayer->ReSetDemoVideo();
+		m_pSideDemoVideoLayer->ReSetVideo();
 		m_pSideMovieVideoLayer->ReSetVideo();
 	}
 	m_bIsPlayVideo = false;

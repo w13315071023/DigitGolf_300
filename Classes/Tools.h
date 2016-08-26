@@ -63,6 +63,8 @@ extern int Ext_VideoSleep;
 extern int Ext_SerialThreshold;
 extern int Ext_VideoGain;
 extern int Ext_StepNum;
+extern int Ext_FFmpegStep;
+
 
 extern int Ext_VideoExposureTime;
 extern float Ext_ToPixels;

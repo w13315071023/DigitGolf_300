@@ -40,6 +40,7 @@ public:
 	MyMenu* m_pMenu;
 	float m_curSingle;
 	unsigned int m_curMsg;
+	int m_StepIndex;
 
 	static DrawingLayer* m_pDrawingLayer;
 	static bool m_bIsPlayVideo;
