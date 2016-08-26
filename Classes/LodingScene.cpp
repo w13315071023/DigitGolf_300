@@ -30,11 +30,8 @@ bool LodingScene::init()
 	}
 	Ext_cameraNum = 2;
 
-	tSdkCameraDevInfo	cameraInfo[2];
-	cameraInfo[0] = tSdkCameraDevInfo();
-	cameraInfo[1] = tSdkCameraDevInfo();
+	tSdkCameraDevInfo	cameraInfo[2] = { NULL };
 
-	
 	CameraSdkInit(1);
 	CameraEnumerateDevice(cameraInfo, &Ext_cameraNum);
 
