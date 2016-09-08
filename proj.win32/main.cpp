@@ -86,7 +86,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                        LPTSTR    lpCmdLine,
                        int       nCmdShow)
 {
-	Ext_TiaoShi = true;
+	Ext_TiaoShi = false;
 	if (!Ext_TiaoShi)
 	{
 		freopen("DeBugMsg.txt", "w", stdout);

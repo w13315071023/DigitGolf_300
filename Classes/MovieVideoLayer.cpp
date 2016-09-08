@@ -146,13 +146,12 @@ void MovieVideoLayer::TransData()
 		swap(m_pFrameImageRGB, m_VideoList[m_TransIndex]);
 		m_TransIndex ++;
 	}
-	
 }
 void MovieVideoLayer::RecordOk()
 {
 	int curIndex = 0;
 	this->Record(false);
-	for (size_t i = m_TransIndex; i < Ext_VideoSize * Ext_StepNum; i ++)
+	for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum; i ++)
 	{
 		if (i == m_TransIndex+20)
 		{
@@ -195,7 +194,7 @@ void MovieVideoLayer::ResetVideoSize()
 	{
 		for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum - curVideoSize; i++)
 		{
-			unsigned char* FrameData = (unsigned char*)malloc(MovieVideoLayer::m_Camera1->BufferSize);
+			unsigned char* FrameData = (unsigned char*)av_malloc(MovieVideoLayer::m_Camera1->BufferSize);
 			m_VideoList.push_back(FrameData);
 		}
 	}
