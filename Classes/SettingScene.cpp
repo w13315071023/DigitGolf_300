@@ -123,10 +123,23 @@ bool SettingScene::init()
 		pSetQingjingItem->setSelectedIndex(2);
 	}
 
-	CCMenuItemImage* pEnter = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png", this, menu_selector(SettingScene::menuCallBack));
+	CCMenuItemImage* pEnter = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png", this, menu_selector(SettingScene::menuEnterCallBack));
 	pEnter->setPosition(ccp(VISIBLEW / 2, 90));
 
-	MyMenu* pMenu = MyMenu::create(pEnter, pSetCameraItem, pSetQingjingItem, NULL);
+	m_pDemoVideo = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png","SettingUI/qdan2.png", this, menu_selector(SettingScene::menuCallBack));
+	m_pDemoVideo->setPosition(ccp(1500, 330));
+	m_pDemoVideo->setEnabled(false);
+
+	m_pSelfVideo = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png","SettingUI/qdan2.png", this, menu_selector(SettingScene::menuCallBack));
+	m_pSelfVideo->setPosition(ccp(1500, 240));
+
+	MyMenu* pMenu = MyMenu::create(
+		pEnter,
+		m_pDemoVideo,
+		m_pSelfVideo,
+		pSetCameraItem,
+		pSetQingjingItem,
+		NULL);
 	pMenu->setPosition(CCPointZero);
 
 	this->addChild(pSetting);
@@ -199,9 +212,24 @@ void SettingScene::onExit()
 
 	saveValue(object, "Setting.json");
 }
-void SettingScene::menuCallBack(CCObject* obj)
+void SettingScene::menuEnterCallBack(CCObject* obj)
 {
 	CCDirector::sharedDirector()->popScene();
+}
+void SettingScene::menuCallBack(CCObject* obj)
+{
+	if (obj == m_pDemoVideo)
+	{
+		m_pDemoVideo->setEnabled(false);
+		m_pSelfVideo->setEnabled(true);
+		Ext_IsDemoVideo == true;
+	}
+	else
+	{
+		m_pDemoVideo->setEnabled(true);
+		m_pSelfVideo->setEnabled(false);
+		Ext_IsDemoVideo == false;
+	}
 }
 void SettingScene::SetCameraCallBack(CCObject* obj)
 {

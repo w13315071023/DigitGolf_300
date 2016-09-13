@@ -8,6 +8,6 @@ class FFmpegClass
 	~FFmpegClass(void);
 
 	bool ReadVideo();
-	void SeveVideo();
+	void SaveVideo();
 };
 

@@ -18,7 +18,6 @@ DemoVideoLayer* DemoVideoLayer::create(int Direction)
 }
 DemoVideoLayer::DemoVideoLayer()
 {
-	pSwsCtx = NULL;
 }
 
 DemoVideoLayer::~DemoVideoLayer()
@@ -43,13 +42,30 @@ bool DemoVideoLayer::init(int Direction)
 	pCodecCtx = NULL;
 	pFormatCtx = NULL;
 	packet = AVPacket();
-	filename = new char[64];
-	//sprintf(filename,"C:\\Video\\C0004_500fps.MP4");
-	sprintf(filename,
-		"C:\\Video\\sucai%d-%d-%d.avi",
+	m_BitRate = 400000;
+	m_Direction = Direction;
+	sprintf(outFilePath,
+		SELFVIDEO,
 		DataMager::shareDataMager()->m_curGender,
 		DataMager::shareDataMager()->m_curCuetype,
 		Direction);
+	filename = new char[64];
+	if(Ext_IsDemoVideo)
+	{
+		sprintf(filename,
+			DEMOVIDEO,
+			DataMager::shareDataMager()->m_curGender,
+			DataMager::shareDataMager()->m_curCuetype,
+			Direction);
+	}
+	else
+	{
+		sprintf(filename,
+			SELFVIDEO,
+			DataMager::shareDataMager()->m_curGender,
+			DataMager::shareDataMager()->m_curCuetype,
+			Direction);
+	}
 	this->LoadVideo();
 	this->ShowVideo();
 	CCSprite* beijing2 = CCSprite::create("VideoUI/beijing2.png");
@@ -57,6 +73,7 @@ bool DemoVideoLayer::init(int Direction)
 	this->addChild(beijing2);
 	m_pSprite->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
 	this->addChild(m_pSprite);
+
 	return true;
 }
 bool DemoVideoLayer::LoadVideo()
@@ -65,8 +82,16 @@ bool DemoVideoLayer::LoadVideo()
 
 	if (avformat_open_input(&pFormatCtx, filename, NULL, NULL) != 0)
 	{
-		CCLog("open");
-		return false;
+		sprintf(filename,
+		DEMOVIDEO,
+		DataMager::shareDataMager()->m_curGender,
+		DataMager::shareDataMager()->m_curCuetype,
+		m_Direction);
+		if(avformat_open_input(&pFormatCtx, filename, NULL, NULL) != 0)
+		{
+			CCLog("open");
+			return false;
+		}
 	}
 	if (avformat_find_stream_info(pFormatCtx, 0) < 0)
 	{
@@ -105,7 +130,7 @@ bool DemoVideoLayer::LoadVideo()
 		CCLog("pFrame||pFrameRGB");
 		return false;
 	}
-	PictureSize = avpicture_get_size(AV_PIX_FMT_BGR24, pCodecCtx->width, pCodecCtx->height);
+	PictureSize = pCodecCtx->width*pCodecCtx->height*3;
 
 	pSwsCtx = sws_getCachedContext(
 		pSwsCtx,
@@ -154,6 +179,7 @@ bool DemoVideoLayer::LoadVideo()
 	Ext_VideoSize = m_VideoList.size();
 
 	sws_freeContext(pSwsCtx);
+	pSwsCtx = NULL;
 	av_free(pFrame);
 	av_free(pFrameRGB);
 	avcodec_close(pCodecCtx);

@@ -73,5 +73,7 @@ public:
 	void CallbackPreview(CCObject* pSender);
 	void CallbackSetMode(CCObject* pSender);
 	void CallbackUpload(CCObject* pSender);
+	void CallbackSaveVideo(CCObject* pSender);
+	void CallbackSwapVideo(CCObject* pSender);
 };
 

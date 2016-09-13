@@ -15,4 +15,3 @@ public:
 	virtual void draw(void);
 	void setDrawPoint(vector<vector<CCPoint>*> pVec);
 };
-

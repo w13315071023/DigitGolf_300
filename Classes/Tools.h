@@ -21,21 +21,6 @@
 #include "CameraGrabber.h"
 #include <ocidl.h>
 #include "CameraImage.h"
-extern "C"
-{
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libswscale/swscale.h>
-
-#include <libavutil/parseutils.h>
-#include <libavutil/opt.h>
-#include <libavutil/channel_layout.h>
-#include <libavutil/common.h>
-#include <libavutil/imgutils.h>
-#include <libavutil/mathematics.h>
-#include <libavutil/samplefmt.h>
-}
-
 
 using namespace std;
 using namespace rapidjson;
@@ -55,6 +40,8 @@ USING_NS_CC_EXT;
 #define LUODIANBILI 1.88
 #define PAOWUBILI 2.016
 #define BAXINBILI 5.2
+#define DEMOVIDEO "C:\\DemoVideo\\Demo%d-%d-%d.avi"
+#define SELFVIDEO "C:\\SelfVideo\\Self%d-%d-%d.avi"
 
 extern int instenceTarget;
 extern INT	Ext_cameraNum;
@@ -77,6 +64,7 @@ extern bool Ext_TiaoShi;
 extern bool Ext_IsFrontCamera;
 extern bool Ext_IsTurnCamera;
 extern bool Ext_IsTurnEnd;
+extern bool Ext_IsDemoVideo;
 
 enum MENUTAG
 {
@@ -101,17 +89,6 @@ enum CUETYPE
     CUETYPE_TIEGAN = 140,
     CUETYPE_WAQIGAN = 110,
 };
-typedef struct _OutputStream
-{
-	AVStream* st;
-	AVFrame* videoFrame;
-	AVFrame* audioFrame;
-
-	int64_t next_pts;
-	float t, tincr,tinct2;
-	struct SwsContext* sws_ctx;
-	struct SwrContext* swr_ctx;
-}OutputStream;
 struct ColorPoint
 {
     CCPoint pos;

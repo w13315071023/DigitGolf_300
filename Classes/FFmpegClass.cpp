@@ -113,7 +113,8 @@ bool FFmpegClass::ReadVideo()
 	avformat_close_input(&pFormatCtx);
 	return true;
 }
-void FFmpegClass::SeveVideo()
+void FFmpegClass::
+SaveVideo()
 {
 	int ret = 0;
 	int got_packet = 0;

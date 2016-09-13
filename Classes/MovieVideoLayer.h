@@ -15,9 +15,6 @@ public:
 	unsigned char* m_pFrameImageRGB;
 	tSdkFrameHead m_FrameImageHead;
 
-	AVFrame* m_pRGBFrame;  //RGB帧数据      
-	AVFrame* m_pYUVFrame;  //YUV帧数据   
-	static SwsContext* pSwsCtx;
 public:
 	MovieVideoLayer();
 	~MovieVideoLayer();
@@ -28,7 +25,4 @@ public:
 	void TransData();
 	void RecordOk();
 	void ResetVideoSize();
-	void SeveVideo();
-	void Add_audio_viode_stream(OutputStream* viode_st, OutputStream* audio_st, AVFormatContext* oc, AVCodec* video_encoder, AVCodec* audio_encoder);
-	void fill_yuv_image(int imageInx);
 };
