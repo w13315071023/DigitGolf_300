@@ -25,4 +25,5 @@ public:
 	void TransData();
 	void RecordOk();
 	void ResetVideoSize();
+	
 };

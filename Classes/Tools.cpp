@@ -21,7 +21,7 @@ extern bool Ext_IsRecordBegin = false;
 extern bool Ext_TiaoShi = true;
 extern bool Ext_IsFrontCamera = true;
 extern bool Ext_IsTurnCamera = false;
-extern bool Ext_IsDemoVideo = false;
+extern bool Ext_IsDemoVideo = true;
 
 string GBKToUTF8(const string& strGBK)
 {

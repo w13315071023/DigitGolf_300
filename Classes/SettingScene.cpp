@@ -126,12 +126,22 @@ bool SettingScene::init()
 	CCMenuItemImage* pEnter = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png", this, menu_selector(SettingScene::menuEnterCallBack));
 	pEnter->setPosition(ccp(VISIBLEW / 2, 90));
 
-	m_pDemoVideo = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png","SettingUI/qdan2.png", this, menu_selector(SettingScene::menuCallBack));
+	CCSprite* pBackGround3 = CCSprite::create("SettingUI/Bg3.png");
+	pBackGround3->setPosition(ccp(1500, 285));
+	
+	m_pDemoVideo = CCMenuItemImage::create("SettingUI/moren1.png", "SettingUI/moren2.png","SettingUI/moren2.png", this, menu_selector(SettingScene::menuCallBack));
 	m_pDemoVideo->setPosition(ccp(1500, 330));
-	m_pDemoVideo->setEnabled(false);
-
-	m_pSelfVideo = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png","SettingUI/qdan2.png", this, menu_selector(SettingScene::menuCallBack));
+	
+	m_pSelfVideo = CCMenuItemImage::create("SettingUI/zidingyi1.png", "SettingUI/zidingyi2.png","SettingUI/zidingyi2.png", this, menu_selector(SettingScene::menuCallBack));
 	m_pSelfVideo->setPosition(ccp(1500, 240));
+	if(Ext_IsDemoVideo == true)
+	{
+		m_pDemoVideo->setEnabled(false);
+	}
+	else
+	{
+		m_pSelfVideo->setEnabled(false);
+	}
 
 	MyMenu* pMenu = MyMenu::create(
 		pEnter,
@@ -154,6 +164,7 @@ bool SettingScene::init()
 	this->addChild(pSerialThreshold);
 	this->addChild(pVideoGain);
 	this->addChild(pSetQingjing);
+	this->addChild(pBackGround3);
 	this->addChild(pMenu);
 
 	return true;
@@ -222,13 +233,13 @@ void SettingScene::menuCallBack(CCObject* obj)
 	{
 		m_pDemoVideo->setEnabled(false);
 		m_pSelfVideo->setEnabled(true);
-		Ext_IsDemoVideo == true;
+		Ext_IsDemoVideo = true;
 	}
 	else
 	{
 		m_pDemoVideo->setEnabled(true);
 		m_pSelfVideo->setEnabled(false);
-		Ext_IsDemoVideo == false;
+		Ext_IsDemoVideo = false;
 	}
 }
 void SettingScene::SetCameraCallBack(CCObject* obj)

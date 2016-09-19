@@ -1,4 +1,5 @@
 #include "MovieVideoLayer.h"
+#include "PostureAnalysisScene.h"
 #include "DataMager.h"
 #include "SerialMager.h"
 #include "RecordClass.h"
@@ -54,7 +55,7 @@ bool MovieVideoLayer::init(int Direction)
 	{
 		return true;
 	}
-    if(Direction == FRONT)
+	if(Direction == FRONT)
 	{
 		m_Camera = m_Camera1;
 		sprintf(outFilePath,"Upload/name1.mp4");
@@ -64,7 +65,6 @@ bool MovieVideoLayer::init(int Direction)
 		m_Camera = m_Camera2; 
 		sprintf(outFilePath,"Upload/name2.mp4");
 	}
-
 	for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum; i++)
 	{
 		unsigned char* FrameData = (unsigned char*)av_malloc(m_Camera->BufferSize);
@@ -78,6 +78,7 @@ bool MovieVideoLayer::init(int Direction)
 	this->addChild(beijing2);
 	m_pSprite->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
 	this->addChild(m_pSprite);
+	
 	
     return true;
 }

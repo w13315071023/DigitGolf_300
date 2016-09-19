@@ -167,6 +167,20 @@ bool PostureAnalysisScene::init()
 	m_pDanjian->setPosition(ccp(116-38,80));
 	m_pXunhuan->setPosition(ccp(116 + 38, 80));
 	
+	CCMenuItemImage* pTihuan = CCMenuItemImage::create(
+		"VideoUI/tihuan1.png",
+		"VideoUI/tihuan2.png",
+		this,
+		menu_selector(PostureAnalysisScene::CallbackSwapVideo));
+	pTihuan->setPosition(ccp(VISIBLEW/2-80,VISIBLEH/2));
+
+	CCMenuItemImage* pBaocun = CCMenuItemImage::create(
+		"VideoUI/baocun1.png",
+		"VideoUI/baocun2.png",
+		this,
+		menu_selector(PostureAnalysisScene::CallbackSaveVideo));
+	pBaocun->setPosition(ccp(VISIBLEW / 2+630, VISIBLEH / 2));
+
 	m_pMenu = MyMenu::create(
 		pBackItem,
 		pUploadItem,
@@ -178,6 +192,8 @@ bool PostureAnalysisScene::init()
 		m_pPreview,
 		m_pDanjian,
 		m_pXunhuan,
+		pTihuan,
+		pBaocun,
 		NULL);
 	m_pMenu->setPosition(CCPointZero);
 	this->addChild(m_pMenu, 1);
@@ -871,6 +887,11 @@ void PostureAnalysisScene::CallbackUpload(CCObject* pSender)
 }
 void PostureAnalysisScene::CallbackSaveVideo(CCObject* pSender)
 {
+	CCLayerColor* pLayerColor = CCLayerColor::create(ccc4(128,128,128,128));
+	CCLabelTTF* pLable = CCLabelTTF::create(GBKToUTF8("正在保存自定义视频\n").c_str(),"Arial",72);
+	pLable->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
+	pLayerColor->addChild(pLable);
+	this->addChild(pLayerColor);
 	if (m_pFrontDemoVideoLayer)
 	{
 		m_pFrontDemoVideoLayer->SaveVideo();
@@ -879,6 +900,7 @@ void PostureAnalysisScene::CallbackSaveVideo(CCObject* pSender)
 	{
 		m_pSideDemoVideoLayer->SaveVideo();
 	}
+	this->removeChild(pLayerColor);
 }
 void PostureAnalysisScene::CallbackSwapVideo(CCObject* pSender)
 {
@@ -889,5 +911,12 @@ void PostureAnalysisScene::CallbackSwapVideo(CCObject* pSender)
 	if (m_pSideDemoVideoLayer&&m_pSideMovieVideoLayer)
 	{
 		swap(m_pSideDemoVideoLayer->m_VideoList,m_pSideMovieVideoLayer->m_VideoList);
+	}
+	m_pFrontDemoVideoLayer->ReSetVideo();
+	m_pFrontMovieVideoLayer->ReSetVideo();
+	if (Ext_cameraNum == 2)
+	{
+		m_pSideDemoVideoLayer->ReSetVideo();
+		m_pSideMovieVideoLayer->ReSetVideo();
 	}
 }

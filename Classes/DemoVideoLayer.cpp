@@ -1,4 +1,5 @@
 #include "DemoVideoLayer.h"
+#include "PostureAnalysisScene.h"
 #include "DataMager.h"
 
 DemoVideoLayer* DemoVideoLayer::create(int Direction)
@@ -74,6 +75,7 @@ bool DemoVideoLayer::init(int Direction)
 	m_pSprite->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
 	this->addChild(m_pSprite);
 
+	this->setRotationX(180);
 	return true;
 }
 bool DemoVideoLayer::LoadVideo()
@@ -158,6 +160,14 @@ bool DemoVideoLayer::LoadVideo()
 				buf = (uint8_t*)av_malloc(PictureSize);
 
 				avpicture_fill((AVPicture *)pFrameRGB, buf, AV_PIX_FMT_BGR24, pCodecCtx->width, pCodecCtx->height);
+
+				pFrameRGB->data[0] += pFrameRGB->linesize[0] * (480 - 1);
+				pFrameRGB->linesize[0] *= -1;
+				pFrameRGB->data[1] += pFrameRGB->linesize[1] * (480 / 2 - 1);
+				pFrameRGB->linesize[1] *= -1;
+				pFrameRGB->data[2] += pFrameRGB->linesize[2] * (480 / 2 - 1);
+				pFrameRGB->linesize[2] *= -1;
+
 				m_Width = pCodecCtx->width;
 				m_Height = pCodecCtx->height;
 				unsigned char* pVideoRGB24 = buf;
