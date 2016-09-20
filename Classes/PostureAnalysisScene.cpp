@@ -167,20 +167,6 @@ bool PostureAnalysisScene::init()
 	m_pDanjian->setPosition(ccp(116-38,80));
 	m_pXunhuan->setPosition(ccp(116 + 38, 80));
 	
-	CCMenuItemImage* pTihuan = CCMenuItemImage::create(
-		"VideoUI/tihuan1.png",
-		"VideoUI/tihuan2.png",
-		this,
-		menu_selector(PostureAnalysisScene::CallbackSwapVideo));
-	pTihuan->setPosition(ccp(VISIBLEW/2-80,VISIBLEH/2));
-
-	CCMenuItemImage* pBaocun = CCMenuItemImage::create(
-		"VideoUI/baocun1.png",
-		"VideoUI/baocun2.png",
-		this,
-		menu_selector(PostureAnalysisScene::CallbackSaveVideo));
-	pBaocun->setPosition(ccp(VISIBLEW / 2+630, VISIBLEH / 2));
-
 	m_pMenu = MyMenu::create(
 		pBackItem,
 		pUploadItem,
@@ -192,8 +178,6 @@ bool PostureAnalysisScene::init()
 		m_pPreview,
 		m_pDanjian,
 		m_pXunhuan,
-		pTihuan,
-		pBaocun,
 		NULL);
 	m_pMenu->setPosition(CCPointZero);
 	this->addChild(m_pMenu, 1);

@@ -78,7 +78,21 @@ bool MovieVideoLayer::init(int Direction)
 	this->addChild(beijing2);
 	m_pSprite->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
 	this->addChild(m_pSprite);
-	
+	if(Direction == FRONT)
+	{
+		CCMenuItemImage* pTihuan = CCMenuItemImage::create(
+			"VideoUI/tihuan1.png",
+			"VideoUI/tihuan2.png",
+			this,
+			menu_selector(PostureAnalysisScene::CallbackSwapVideo));
+		pTihuan->setPosition(ccp(VISIBLEW/2+240,VISIBLEH/2+200));
+		pTihuan->setRotationX(180);
+
+		MyMenu* pMenu = MyMenu::create(pTihuan,NULL);
+		pMenu->setPosition(CCPointZero);
+		this->addChild(pMenu);
+	}
+
 	
     return true;
 }

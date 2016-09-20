@@ -74,7 +74,20 @@ bool DemoVideoLayer::init(int Direction)
 	this->addChild(beijing2);
 	m_pSprite->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
 	this->addChild(m_pSprite);
+	if(Direction == FRONT)
+	{
+		CCMenuItemImage* pBaocun = CCMenuItemImage::create(
+			"VideoUI/baocun1.png",
+			"VideoUI/baocun2.png",
+			this,
+			menu_selector(PostureAnalysisScene::CallbackSaveVideo));
+		pBaocun->setPosition(ccp(VISIBLEW / 2+240, VISIBLEH / 2+200));
+		pBaocun->setRotationX(180);
 
+		MyMenu* pMenu = MyMenu::create(pBaocun,NULL);
+		pMenu->setPosition(CCPointZero);
+		this->addChild(pMenu);
+	}
 	this->setRotationX(180);
 	return true;
 }
