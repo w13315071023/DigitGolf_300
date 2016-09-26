@@ -160,7 +160,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;pthreadVCE2.lib;QRGenerator.lib;MVCAMSDK_X64.lib;postproc.lib;SerialDll.lib;DbgHelp.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -169,7 +168,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
-      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -227,7 +225,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libExtensions.lib;libcocos2d.lib;libCocosDenshion.lib;opengl32.lib;glew32.lib;libBox2d.lib;libchipmunk.lib;libcurl_imp.lib;pthreadVCE2.lib;QRGenerator.lib;MVCAMSDK_X64.lib;postproc.lib;SerialDll.lib;DbgHelp.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;swresample.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -242,7 +239,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\external\libwebsockets\win32\lib\*.*" "$(OutD
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
       <LinkTimeCodeGeneration>
       </LinkTimeCodeGeneration>
-      <AdditionalOptions>/EHa %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
@@ -270,6 +266,7 @@ xcopy /Y /Q "..\library\*.dll" "$(OutDir)"
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\LodingScene.cpp" />
     <ClCompile Include="..\Classes\Logo.cpp" />
+    <ClCompile Include="..\Classes\MessageScene.cpp" />
     <ClCompile Include="..\Classes\MovieVideoLayer.cpp" />
     <ClCompile Include="..\Classes\MyMenu.cpp" />
     <ClCompile Include="..\Classes\ParabolicLayer.cpp" />
@@ -301,6 +298,7 @@ xcopy /Y /Q "..\library\*.dll" "$(OutDir)"
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\LodingScene.h" />
     <ClInclude Include="..\Classes\Logo.h" />
+    <ClInclude Include="..\Classes\MessageScene.h" />
     <ClInclude Include="..\Classes\MovieVideoLayer.h" />
     <ClInclude Include="..\Classes\MyMenu.h" />
     <ClInclude Include="..\Classes\ParabolicLayer.h" />
@@ -315,6 +313,7 @@ xcopy /Y /Q "..\library\*.dll" "$(OutDir)"
     <ClInclude Include="..\Classes\UpLode.h" />
     <ClInclude Include="..\Classes\VideoClass.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\cocos2dx\proj.win32\cocos2d.vcxproj">
@@ -337,6 +336,12 @@ xcopy /Y /Q "..\library\*.dll" "$(OutDir)"
       <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DigitGolf_300.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\HomeUI\digitgolf.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

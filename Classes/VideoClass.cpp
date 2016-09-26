@@ -69,7 +69,7 @@ void VideoClass::Add_audio_viode_stream(OutputStream* viode_st, OutputStream* au
 		AVCodecContext* codecCtx = viode_st->st->codec;
 
 		codecCtx->codec_id = fmt->video_codec;
-		codecCtx->bit_rate = m_BitRate;
+		codecCtx->bit_rate = 400000;
 		codecCtx->width = m_Width;
 		codecCtx->height = m_Height;
 		AVRational r = {1,25};
@@ -120,13 +120,15 @@ void VideoClass::SaveVideo()
 	int ret = 0;
 	int got_packet = 0;
 
-	AVOutputFormat* fmt = { NULL };
-	AVFormatContext* fmt_ctx = { NULL };
-	AVCodec* videoEncoder = { NULL };
-	AVCodec* audioEncoder = { NULL };
+	AVOutputFormat* fmt = NULL;
+	AVFormatContext* fmt_ctx = NULL;
+	AVCodec* videoEncoder = NULL;
+	AVCodec* audioEncoder = NULL;
 
-	OutputStream video_st = { NULL };
-	OutputStream audio_st = { NULL };
+	OutputStream video_st;
+	OutputStream audio_st;
+	memset(&video_st,0,sizeof(OutputStream));
+	memset(&audio_st,0,sizeof(OutputStream));
 
 	av_register_all();
 	avformat_alloc_output_context2(&fmt_ctx, NULL, NULL, outFilePath);
@@ -149,7 +151,7 @@ void VideoClass::SaveVideo()
 		
 		codecCtx = video_st.st->codec;
 		codecCtx->codec_id = fmt->video_codec;
-		codecCtx->bit_rate = 400000;
+		codecCtx->bit_rate = m_BitRate;
 		codecCtx->width = m_Width;
 		codecCtx->height = m_Height;
 		AVRational r = { 1, 25 };
@@ -204,7 +206,9 @@ void VideoClass::SaveVideo()
 
 	for (size_t i = 0; i < m_VideoList.size()/Ext_FFmpegStep; i++)
 	{
+
 		AVPacket pkt;
+		memset(&pkt,0,sizeof(AVPacket));
 		av_init_packet(&pkt);
 		ret = av_frame_make_writable(video_st.videoFrame);
 		fill_yuv_image(i*Ext_FFmpegStep);

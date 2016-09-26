@@ -96,6 +96,9 @@
     <ClCompile Include="..\Classes\VideoClass.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\MessageScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -185,5 +188,15 @@
     <ClInclude Include="..\Classes\VideoClass.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\MessageScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DigitGolf_300.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\HomeUI\digitgolf.ico" />
   </ItemGroup>
 </Project>

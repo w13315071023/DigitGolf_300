@@ -38,6 +38,7 @@ public:
 	CCMenuItemImage* m_pFrontViewItem2;
 	CCMenuItemImage* m_pFrontDemoViewItem;
 	MyMenu* m_pMenu;
+	CCLabelTTF* m_pLabel;
 	float m_curSingle;
 	unsigned int m_curMsg;
 	int m_StepIndex;

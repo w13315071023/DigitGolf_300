@@ -68,12 +68,10 @@ void UpLode::update(float dt)
 		case 0:
 			m_QRText = "";
 			m_TextNum = 0;
-			PostureAnalysisScene::m_pFrontMovieVideoLayer->
-SaveVideo();
+			PostureAnalysisScene::m_pFrontMovieVideoLayer->SaveVideo();
 			if (Ext_cameraNum == 2)
 			{
-				PostureAnalysisScene::m_pSideMovieVideoLayer->
-SaveVideo();
+				PostureAnalysisScene::m_pSideMovieVideoLayer->SaveVideo();
 			}
 			m_time++;
 		break;

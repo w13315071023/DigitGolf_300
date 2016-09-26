@@ -43,7 +43,7 @@ bool DemoVideoLayer::init(int Direction)
 	pCodecCtx = NULL;
 	pFormatCtx = NULL;
 	packet = AVPacket();
-	m_BitRate = 400000;
+	m_BitRate = 18000000;
 	m_Direction = Direction;
 	sprintf(outFilePath,
 		SELFVIDEO,

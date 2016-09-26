@@ -80,15 +80,15 @@ bool MovieVideoLayer::init(int Direction)
 	this->addChild(m_pSprite);
 	if(Direction == FRONT)
 	{
-		CCMenuItemImage* pTihuan = CCMenuItemImage::create(
+		m_pTihuan = CCMenuItemImage::create(
 			"VideoUI/tihuan1.png",
 			"VideoUI/tihuan2.png",
 			this,
 			menu_selector(PostureAnalysisScene::CallbackSwapVideo));
-		pTihuan->setPosition(ccp(VISIBLEW/2+240,VISIBLEH/2+200));
-		pTihuan->setRotationX(180);
-
-		MyMenu* pMenu = MyMenu::create(pTihuan,NULL);
+		m_pTihuan->setPosition(ccp(VISIBLEW/2+240,VISIBLEH/2+200));
+		m_pTihuan->setRotationX(180);
+		m_pTihuan->setVisible(false);
+		MyMenu* pMenu = MyMenu::create(m_pTihuan,NULL);
 		pMenu->setPosition(CCPointZero);
 		this->addChild(pMenu);
 	}
@@ -128,13 +128,14 @@ void MovieVideoLayer::Record(bool isRecord)
 }
 void MovieVideoLayer::TransData()
 {
-	if (m_TransIndex < 20 || Ext_IsRecordBegin == false)
+	if (m_TransIndex < 200 || Ext_IsRecordBegin == false)
 	{
 		return;
 	}
 	if (m_TransIndex == Ext_VideoSize * Ext_StepNum)
 	{
 		m_TransIndex = 0;
+		m_pTihuan->setVisible(true);
 		return;
 	}
 	for (size_t i = 0; i < Ext_StepNum; i++)
@@ -154,10 +155,12 @@ void MovieVideoLayer::TransData()
 void MovieVideoLayer::RecordOk()
 {
 	int curIndex = 0;
+	m_TransIndex = 0;
 	this->Record(false);
+	m_pTihuan->setVisible(false);
 	for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum; i ++)
 	{
-		if (i == m_TransIndex+20)
+		if (i == m_TransIndex+200)
 		{
 			m_TransIndex = i;
 			break;

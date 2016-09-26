@@ -15,6 +15,7 @@ public:
 	unsigned char* m_pFrameImageRGB;
 	tSdkFrameHead m_FrameImageHead;
 
+	CCMenuItemImage* m_pTihuan;
 public:
 	MovieVideoLayer();
 	~MovieVideoLayer();

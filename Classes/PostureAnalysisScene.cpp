@@ -2,6 +2,7 @@
 //#include "GolfXIMager.h"
 #include "DataMager.h"
 #include "UpLode.h"
+#include "MessageScene.h"
 
 DrawingLayer* PostureAnalysisScene::m_pDrawingLayer = NULL;
 MovieVideoLayer* PostureAnalysisScene::m_pFrontMovieVideoLayer = NULL;
@@ -871,20 +872,7 @@ void PostureAnalysisScene::CallbackUpload(CCObject* pSender)
 }
 void PostureAnalysisScene::CallbackSaveVideo(CCObject* pSender)
 {
-	CCLayerColor* pLayerColor = CCLayerColor::create(ccc4(128,128,128,128));
-	CCLabelTTF* pLable = CCLabelTTF::create(GBKToUTF8("正在保存自定义视频\n").c_str(),"Arial",72);
-	pLable->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
-	pLayerColor->addChild(pLable);
-	this->addChild(pLayerColor);
-	if (m_pFrontDemoVideoLayer)
-	{
-		m_pFrontDemoVideoLayer->SaveVideo();
-	}
-	if (m_pSideDemoVideoLayer)
-	{
-		m_pSideDemoVideoLayer->SaveVideo();
-	}
-	this->removeChild(pLayerColor);
+	CCDirector::sharedDirector()->pushScene(MessageScene::getScene());
 }
 void PostureAnalysisScene::CallbackSwapVideo(CCObject* pSender)
 {
