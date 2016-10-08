@@ -2,7 +2,7 @@
 #include "GuangGao.h"
 
 extern int instenceTarget = 140;
-extern int Ext_StepNum = 10;
+extern int Ext_StepNum = 1;
 extern int Ext_FFmpegStep = 1;
 extern INT Ext_cameraNum = 0; 
 extern int Ext_VideoSize = 0;
@@ -10,6 +10,7 @@ extern int Ext_VideoSleep = 1000;
 extern int Ext_SerialThreshold = 800;
 extern int Ext_VideoGain = 64;
 extern int Ext_VideoExposureTime = 3300;
+extern int Ext_FrameRate = 60;
 
 extern float Ext_ToPixels = 0.3;
 
@@ -22,6 +23,7 @@ extern bool Ext_TiaoShi = true;
 extern bool Ext_IsFrontCamera = true;
 extern bool Ext_IsTurnCamera = false;
 extern bool Ext_IsDemoVideo = true;
+extern bool Ext_Is300Frames = false;
 
 string GBKToUTF8(const string& strGBK)
 {

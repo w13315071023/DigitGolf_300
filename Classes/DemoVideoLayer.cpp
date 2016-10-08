@@ -47,6 +47,7 @@ bool DemoVideoLayer::init(int Direction)
 	m_Direction = Direction;
 	sprintf(outFilePath,
 		SELFVIDEO,
+		Ext_FrameRate,
 		DataMager::shareDataMager()->m_curGender,
 		DataMager::shareDataMager()->m_curCuetype,
 		Direction);
@@ -55,6 +56,7 @@ bool DemoVideoLayer::init(int Direction)
 	{
 		sprintf(filename,
 			DEMOVIDEO,
+			Ext_FrameRate,
 			DataMager::shareDataMager()->m_curGender,
 			DataMager::shareDataMager()->m_curCuetype,
 			Direction);
@@ -63,6 +65,7 @@ bool DemoVideoLayer::init(int Direction)
 	{
 		sprintf(filename,
 			SELFVIDEO,
+			Ext_FrameRate,
 			DataMager::shareDataMager()->m_curGender,
 			DataMager::shareDataMager()->m_curCuetype,
 			Direction);
@@ -99,6 +102,7 @@ bool DemoVideoLayer::LoadVideo()
 	{
 		sprintf(filename,
 		DEMOVIDEO,
+		Ext_FrameRate,
 		DataMager::shareDataMager()->m_curGender,
 		DataMager::shareDataMager()->m_curCuetype,
 		m_Direction);

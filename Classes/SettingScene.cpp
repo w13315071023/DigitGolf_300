@@ -30,26 +30,16 @@ bool SettingScene::init()
 	{
 		return false;
 	}
-	CCSprite* pBackGround1 = CCSprite::create("SettingUI/Bg1.png");
-	CCSprite* pBackGround2 = CCSprite::create("SettingUI/Bg2.png");
-	pBackGround1->setPosition(ccp(VISIBLEW/2,VISIBLEH/2));
-	pBackGround2->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
-	this->addChild(pBackGround1,-2);
-	this->addChild(pBackGround2,-1);
-	CCSprite* pSetting = CCSprite::create("SettingUI/shezhiFont.png");
-	pSetting->setPosition(ccp(324,890));
+	CCSprite* pBackGround = CCSprite::create("SettingUI/background.png");
+	pBackGround->setPosition(ccp(VISIBLEW/2,VISIBLEH/2));
+	this->addChild(pBackGround,-1);
 	//设置靶心距离
-	CCSprite* pBaxin = CCSprite::create("SettingUI/baxinFont.png");
-	pBaxin->setPosition(ccp(600, 430));
-	this->addChild(pBaxin);
 	UINode* pNode = UINode::create();
-	pNode->setPosition(ccp(1140,430));
+	pNode->setPosition(ccp(830,315));
 	this->addChild(pNode);
 	//视频延迟
-	CCSprite* pVidelSleep = CCSprite::create("SettingUI/yanchiFont.png");
-	pVidelSleep->setPosition(ccp(600, 530));
-	m_VideoSleepSlider = CCControlSlider::create("SettingUI/gdtBg.png", "SettingUI/gdtQj.png", "SettingUI/gdtAn.png");
-	m_VideoSleepSlider->setPosition(ccp(1100, 530));
+	m_VideoSleepSlider = CCControlSlider::create("SettingUI/Slider_1.png", "SettingUI/Slider_2.png", "SettingUI/Slider_3.png");
+	m_VideoSleepSlider->setPosition(ccp(800, 710));
 	m_VideoSleepSlider->setMaximumValue(1500);
 	m_VideoSleepSlider->setMinimumValue(500);
 	m_VideoSleepSlider->setValue(Ext_VideoSleep);
@@ -58,89 +48,108 @@ bool SettingScene::init()
 	char name[32];
 	sprintf(name, "%d", Ext_VideoSleep);
 	m_VideoSleepLabel = CCLabelTTF::create(name, "arial", 24);
-	m_VideoSleepLabel->setPosition(ccp(1500, 530));
+	m_VideoSleepLabel->setPosition(ccp(1150, 710));
 	
 	//声音预制
-	CCSprite* pSerialThreshold = CCSprite::create("SettingUI/shengyinFont.png");
-	pSerialThreshold->setPosition(ccp(600, 630));
-
-	m_SerialThresholdSlider = CCControlSlider::create("SettingUI/gdtBg.png", "SettingUI/gdtQj.png", "SettingUI/gdtAn.png");
-	m_SerialThresholdSlider->setPosition(ccp(1100, 630));
+	m_SerialThresholdSlider = CCControlSlider::create("SettingUI/Slider_1.png", "SettingUI/Slider_2.png", "SettingUI/Slider_3.png");
+	m_SerialThresholdSlider->setPosition(ccp(800, 810));
 	m_SerialThresholdSlider->setMaximumValue(1000);
 	m_SerialThresholdSlider->setMinimumValue(500);
 	m_SerialThresholdSlider->setValue(Ext_SerialThreshold);
 	m_SerialThresholdSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingScene::valueChanged), CCControlEventValueChanged);
 	sprintf(name, "%d", Ext_SerialThreshold);
 	m_SerialThresholdLabel = CCLabelTTF::create(name, "arial", 24);
-	m_SerialThresholdLabel->setPosition(ccp(1500, 630));
+	m_SerialThresholdLabel->setPosition(ccp(1150, 810));
 
 	//视频亮度
-	CCSprite* pVideoGain = CCSprite::create("SettingUI/liangduFont.png");
-	pVideoGain->setPosition(ccp(600, 730));
-
-	m_VideoGainSlider = CCControlSlider::create("SettingUI/gdtBg.png", "SettingUI/gdtQj.png", "SettingUI/gdtAn.png");
-	m_VideoGainSlider->setPosition(ccp(1100, 730));
+	m_VideoGainSlider = CCControlSlider::create("SettingUI/Slider_1.png", "SettingUI/Slider_2.png", "SettingUI/Slider_3.png");
+	m_VideoGainSlider->setPosition(ccp(800, 610));
 	m_VideoGainSlider->setMaximumValue(64);
 	m_VideoGainSlider->setMinimumValue(1);
 	m_VideoGainSlider->setValue(Ext_VideoGain);
 	m_VideoGainSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingScene::valueChanged), CCControlEventValueChanged);
 	sprintf(name, "%d", Ext_VideoGain);
 	m_VideoGainLabel = CCLabelTTF::create(name, "arial", 24);
-	m_VideoGainLabel->setPosition(ccp(1500, 730));
+	m_VideoGainLabel->setPosition(ccp(1150, 610));
 
 	//相机位置
-	CCSprite* pSetCameraLabel = CCSprite::create("SettingUI/xiangjiFont.png");
-	pSetCameraLabel->setPosition(ccp(600, 230));
-
 	CCMenuItemToggle* pSetCameraItem = CCMenuItemToggle::createWithTarget(
 		this, menu_selector(SettingScene::SetCameraCallBack),
-		CCMenuItemImage::create("SettingUI/zmqj.png", "SettingUI/zmqj.png"),
-		CCMenuItemImage::create("SettingUI/cmqj.png", "SettingUI/cmqj.png"), NULL
+		CCMenuItemImage::create("SettingUI/front.png", "SettingUI/front.png"),
+		CCMenuItemImage::create("SettingUI/side.png", "SettingUI/side.png"), NULL
 		);
-	pSetCameraItem->setPosition(ccp(1140, 230));
+	pSetCameraItem->setPosition(ccp(830, 397));
 	pSetCameraItem->setSelectedIndex(Ext_IsFrontCamera?0:1);
 	//情景模式
-	CCSprite* pSetQingjing = CCSprite::create("SettingUI/qingjingmoshi.png");
-	pSetQingjing->setPosition(ccp(600, 330));
-
 	CCMenuItemToggle* pSetQingjingItem = CCMenuItemToggle::createWithTarget(
 		this, menu_selector(SettingScene::SetQingjingCallBack),
-		CCMenuItemImage::create("SettingUI/qingtian.png", "SettingUI/qingtian.png"),
-		CCMenuItemImage::create("SettingUI/yintian.png", "SettingUI/yintian.png"),
-		CCMenuItemImage::create("SettingUI/shinei.png", "SettingUI/shinei.png"), NULL
+		CCMenuItemImage::create("SettingUI/sunny.png", "SettingUI/sunny.png"),
+		CCMenuItemImage::create("SettingUI/cloudy.png", "SettingUI/cloudy.png"),
+		CCMenuItemImage::create("SettingUI/indoor.png", "SettingUI/indoor.png"), NULL
 		);
-	pSetQingjingItem->setPosition(ccp(1140, 330));
-	if (Ext_VideoExposureTime == 3000)
-	{
-		pSetQingjingItem->setSelectedIndex(0);
-	}
-	else if (Ext_VideoExposureTime == 4000)
-	{
-		pSetQingjingItem->setSelectedIndex(1);
-	}
-	else if (Ext_VideoExposureTime == 15000)
-	{
-		pSetQingjingItem->setSelectedIndex(2);
-	}
+	pSetQingjingItem->setPosition(ccp(830, 480));
 
-	CCMenuItemImage* pEnter = CCMenuItemImage::create("SettingUI/qdan1.png", "SettingUI/qdan2.png", this, menu_selector(SettingScene::menuEnterCallBack));
+	if (Ext_VideoGain <= 5)
+	{
+		pSetQingjingItem ->setSelectedIndex(0);
+	}
+	else if (Ext_VideoGain>5&&Ext_VideoGain <= 32)
+	{
+		pSetQingjingItem ->setSelectedIndex(1);
+	}
+	else if (Ext_VideoGain > 32)
+	{
+		pSetQingjingItem ->setSelectedIndex(2);
+	}
+	//确定按钮
+	CCMenuItemImage* pEnter = CCMenuItemImage::create("SettingUI/ok_on.png", "SettingUI/ok_off.png", this, menu_selector(SettingScene::menuEnterCallBack));
 	pEnter->setPosition(ccp(VISIBLEW / 2, 90));
-
-	CCSprite* pBackGround3 = CCSprite::create("SettingUI/Bg3.png");
-	pBackGround3->setPosition(ccp(1500, 285));
-	
-	m_pDemoVideo = CCMenuItemImage::create("SettingUI/moren1.png", "SettingUI/moren2.png","SettingUI/moren2.png", this, menu_selector(SettingScene::menuCallBack));
-	m_pDemoVideo->setPosition(ccp(1500, 330));
-	
-	m_pSelfVideo = CCMenuItemImage::create("SettingUI/zidingyi1.png", "SettingUI/zidingyi2.png","SettingUI/zidingyi2.png", this, menu_selector(SettingScene::menuCallBack));
-	m_pSelfVideo->setPosition(ccp(1500, 240));
-	if(Ext_IsDemoVideo == true)
+	//录像选择
 	{
-		m_pDemoVideo->setEnabled(false);
+		//默认参考按钮
+		m_pDemoVideo = CCMenuItemImage::create("SettingUI/default_on.png", "SettingUI/default_off.png","SettingUI/default_off.png", this, menu_selector(SettingScene::menuVideoCallBack));
+		m_pDemoVideo->setPosition(ccp(1420, 320));
+		//自定义按钮
+		m_pSelfVideo = CCMenuItemImage::create("SettingUI/custom_on.png", "SettingUI/custom_off.png","SettingUI/custom_off.png", this, menu_selector(SettingScene::menuVideoCallBack));
+		m_pSelfVideo->setPosition(ccp(1420, 420));
+		if(Ext_IsDemoVideo == true)
+		{
+			m_pDemoVideo->setEnabled(false);
+		}
+		else
+		{
+			m_pSelfVideo->setEnabled(false);
+		}
 	}
-	else
+	//系统选择
 	{
-		m_pSelfVideo->setEnabled(false);
+		m_pFrames60 = CCMenuItemImage::create("SettingUI/60frames_on.png", "SettingUI/60frames_off.png","SettingUI/60frames_off.png", this, menu_selector(SettingScene::menuFramesCallBack));
+		m_pFrames60->setPosition(ccp(1420, 630));
+
+		m_pFrames300 = CCMenuItemImage::create("SettingUI/300frames_on.png", "SettingUI/300frames_off.png","SettingUI/300frames_off.png", this, menu_selector(SettingScene::menuFramesCallBack));
+		m_pFrames300->setPosition(ccp(1420, 730));
+		if(Ext_Is300Frames)
+		{
+			if(Ext_FrameRate == 300)
+			{
+				m_pFrames300->setEnabled(false);
+				Ext_VideoExposureTime = 3300;
+				Ext_VideoSize = 750;
+			}
+			else
+			{
+				m_pFrames60->setEnabled(false);
+				Ext_VideoExposureTime = 15000;
+				Ext_VideoSize = 150;
+			}
+		}
+		else
+		{
+			m_pFrames300->setEnabled(false);
+			m_pFrames60->setEnabled(false);
+			Ext_VideoExposureTime = 15000;
+			Ext_VideoSize = 150;
+		}
 	}
 
 	MyMenu* pMenu = MyMenu::create(
@@ -149,22 +158,17 @@ bool SettingScene::init()
 		m_pSelfVideo,
 		pSetCameraItem,
 		pSetQingjingItem,
+		m_pFrames60,
+		m_pFrames300,
 		NULL);
 	pMenu->setPosition(CCPointZero);
 
-	this->addChild(pSetting);
 	this->addChild(m_VideoSleepSlider);
 	this->addChild(m_SerialThresholdSlider);
 	this->addChild(m_VideoGainSlider);
 	this->addChild(m_VideoSleepLabel);
 	this->addChild(m_SerialThresholdLabel);
 	this->addChild(m_VideoGainLabel);
-	this->addChild(pSetCameraLabel);
-	this->addChild(pVidelSleep);
-	this->addChild(pSerialThreshold);
-	this->addChild(pVideoGain);
-	this->addChild(pSetQingjing);
-	this->addChild(pBackGround3);
 	this->addChild(pMenu);
 
 	return true;
@@ -193,17 +197,18 @@ void SettingScene::valueChanged(CCObject* sender, CCControlEvent controlEvent)
 }
 void SettingScene::SetQingjingCallBack(CCObject* obj)
 {
-	if (0 == ((CCMenuItemToggle*)obj)->getSelectedIndex())
+	CCMenuItemToggle* pItem = (CCMenuItemToggle*)obj;
+	if (pItem->getSelectedIndex() == 0)
 	{
-		Ext_VideoExposureTime = 3000.0;
+		Ext_VideoGain = 5;
 	}
-	else if (1 == ((CCMenuItemToggle*)obj)->getSelectedIndex())
+	else if (pItem->getSelectedIndex() == 1)
 	{
-		Ext_VideoExposureTime = 4000.0;
+		Ext_VideoGain = 32;
 	}
-	else if (2 == ((CCMenuItemToggle*)obj)->getSelectedIndex())
+	else if (pItem->getSelectedIndex() == 2)
 	{
-		Ext_VideoExposureTime = 15000.0;
+		Ext_VideoGain = 64;
 	}
 }
 void SettingScene::onExit()
@@ -216,10 +221,10 @@ void SettingScene::onExit()
 	object.AddMember("VideoSleep", Ext_VideoSleep, allocator);
 	object.AddMember("SerialThreshold", Ext_SerialThreshold, allocator);
 	object.AddMember("VideoGain", Ext_VideoGain, allocator);
-	object.AddMember("VideoExposureTime", Ext_VideoExposureTime, allocator);
 	object.AddMember("ToPixels", Ext_ToPixels, allocator);
 	object.AddMember("StepNum", Ext_StepNum, allocator);
 	object.AddMember("FFmpegStep", Ext_FFmpegStep, allocator);
+	object.AddMember("FrameRate", Ext_FrameRate, allocator);
 
 	saveValue(object, "Setting.json");
 }
@@ -227,7 +232,7 @@ void SettingScene::menuEnterCallBack(CCObject* obj)
 {
 	CCDirector::sharedDirector()->popScene();
 }
-void SettingScene::menuCallBack(CCObject* obj)
+void SettingScene::menuVideoCallBack(CCObject* obj)
 {
 	if (obj == m_pDemoVideo)
 	{
@@ -240,6 +245,23 @@ void SettingScene::menuCallBack(CCObject* obj)
 		m_pDemoVideo->setEnabled(true);
 		m_pSelfVideo->setEnabled(false);
 		Ext_IsDemoVideo = false;
+	}
+}
+void SettingScene::menuFramesCallBack(CCObject* obj)
+{
+	if (obj == m_pFrames60)
+	{
+		m_pFrames60->setEnabled(false);
+		m_pFrames300->setEnabled(true);
+		Ext_FrameRate = 60;
+		Ext_VideoExposureTime = 15000;
+	}
+	else
+	{
+		m_pFrames60->setEnabled(true);
+		m_pFrames300->setEnabled(false);
+		Ext_FrameRate = 300;
+		Ext_VideoExposureTime = 3300;
 	}
 }
 void SettingScene::SetCameraCallBack(CCObject* obj)

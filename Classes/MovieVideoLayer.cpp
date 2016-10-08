@@ -128,7 +128,7 @@ void MovieVideoLayer::Record(bool isRecord)
 }
 void MovieVideoLayer::TransData()
 {
-	if (m_TransIndex < 200 || Ext_IsRecordBegin == false)
+	if (m_TransIndex < 20 || Ext_IsRecordBegin == false)
 	{
 		return;
 	}
@@ -160,7 +160,7 @@ void MovieVideoLayer::RecordOk()
 	m_pTihuan->setVisible(false);
 	for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum; i ++)
 	{
-		if (i == m_TransIndex+200)
+		if (i == m_TransIndex+20)
 		{
 			m_TransIndex = i;
 			break;

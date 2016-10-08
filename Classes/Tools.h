@@ -11,7 +11,7 @@
 #include "tchar.h"
 #include "cocos2d.h"
 #include <Windows.h>
-#include"cocos-ext.h"
+#include "cocos-ext.h"
 #include "CocoStudio\Json\rapidjson\stringbuffer.h"
 #include "CocoStudio\Json\rapidjson\writer.h"
 #include "GL\glew.h"
@@ -40,8 +40,8 @@ USING_NS_CC_EXT;
 #define LUODIANBILI 1.88
 #define PAOWUBILI 2.016
 #define BAXINBILI 5.2
-#define DEMOVIDEO "C:\\DemoVideo\\Demo%d-%d-%d.avi"
-#define SELFVIDEO "C:\\SelfVideo\\Self%d-%d-%d.avi"
+#define DEMOVIDEO "C:\\DemoVideo\\%d\\Demo%d-%d-%d.avi"
+#define SELFVIDEO "C:\\SelfVideo\\%d\\Self%d-%d-%d.avi"
 
 extern int instenceTarget;
 extern INT	Ext_cameraNum;
@@ -51,6 +51,7 @@ extern int Ext_SerialThreshold;
 extern int Ext_VideoGain;
 extern int Ext_StepNum;
 extern int Ext_FFmpegStep;
+extern int Ext_FrameRate;
 
 
 extern int Ext_VideoExposureTime;
@@ -65,6 +66,7 @@ extern bool Ext_IsFrontCamera;
 extern bool Ext_IsTurnCamera;
 extern bool Ext_IsTurnEnd;
 extern bool Ext_IsDemoVideo;
+extern bool Ext_Is300Frames;
 
 enum MENUTAG
 {

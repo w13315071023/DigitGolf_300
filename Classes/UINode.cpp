@@ -11,7 +11,7 @@ UINode::~UINode(void)
 }
 bool UINode::init()
 {
-	if (!CCSprite::initWithFile("SettingUI/bxszBg.png"))
+	if (!CCSprite::initWithFile("SettingUI/Grey_box.png"))
 	{
 		return false;
 	}
@@ -21,14 +21,14 @@ bool UINode::init()
 	this->addChild(m_pLabelTTF);
 
 	CCMenuItemImage* pZuo = CCMenuItemImage::create(
-		"SettingUI/jxan.png",
-		"SettingUI/jxan.png",
+		"SettingUI/triangle_left.png",
+		"SettingUI/triangle_left.png",
 		this, menu_selector(UINode::menuCallBackZuo));
 	pZuo->setPosition(ccp(Size.width / 2-160, Size.height / 2));
 
 	CCMenuItemImage* pYou = CCMenuItemImage::create(
-		"SettingUI/jdan.png",
-		"SettingUI/jdan.png",
+		"SettingUI/triangle_right.png",
+		"SettingUI/triangle_right.png",
 		this, menu_selector(UINode::menuCallBackYou));
 	pYou->setPosition(ccp(Size.width / 2+160, Size.height / 2));
 
