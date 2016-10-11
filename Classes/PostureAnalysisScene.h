@@ -38,7 +38,7 @@ public:
 	CCMenuItemImage* m_pFrontViewItem2;
 	CCMenuItemImage* m_pFrontDemoViewItem;
 	MyMenu* m_pMenu;
-	CCLabelTTF* m_pLabel;
+	CCLabelTTF* m_pWarningLable;
 	float m_curSingle;
 	unsigned int m_curMsg;
 	int m_StepIndex;
@@ -49,6 +49,7 @@ public:
 	bool m_bIsStepPlay;
 	bool m_bIsVisibleMenu;
 	bool m_bSetMode;
+	bool m_bIsExpose;
     //»æ»­²ã
     //DrawingLayer* m_pDLayer;
 public:

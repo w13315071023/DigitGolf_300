@@ -49,7 +49,7 @@ bool MovieVideoLayer::init(int Direction)
 	m_IsRecord = false;
 	m_Width = 640;
 	m_Height = 480;
-	m_BitRate = 40000;
+	m_BitRate = 400000;
 
 	if (Ext_cameraNum == 0)
 	{

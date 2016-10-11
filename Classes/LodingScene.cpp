@@ -28,6 +28,7 @@ bool LodingScene::init()
 	{
 		return false;
 	}
+
 	Ext_cameraNum = 2;
 
 	tSdkCameraDevInfo	cameraInfo[2] = { NULL };
@@ -87,7 +88,7 @@ bool LodingScene::init()
 	}
 	else
 	{
-		Ext_VideoExposureTime = 15000;
+		Ext_VideoExposureTime = 16600;
 	}
 	CCSprite* pBackGround = CCSprite::create("HomeUI/Bg.png");
 	pBackGround->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));

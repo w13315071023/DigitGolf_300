@@ -91,14 +91,17 @@ bool SettingScene::init()
 
 	if (Ext_VideoGain <= 5)
 	{
+		Ext_IsIndoor = false;
 		pSetQingjingItem ->setSelectedIndex(0);
 	}
 	else if (Ext_VideoGain>5&&Ext_VideoGain <= 32)
 	{
+		Ext_IsIndoor = false;
 		pSetQingjingItem ->setSelectedIndex(1);
 	}
 	else if (Ext_VideoGain > 32)
 	{
+		Ext_IsIndoor = true;
 		pSetQingjingItem ->setSelectedIndex(2);
 	}
 	//È·¶¨°´Å¥
@@ -139,7 +142,7 @@ bool SettingScene::init()
 			else
 			{
 				m_pFrames60->setEnabled(false);
-				Ext_VideoExposureTime = 15000;
+				Ext_VideoExposureTime = 16600;
 				Ext_VideoSize = 150;
 			}
 		}
@@ -147,7 +150,7 @@ bool SettingScene::init()
 		{
 			m_pFrames300->setEnabled(false);
 			m_pFrames60->setEnabled(false);
-			Ext_VideoExposureTime = 15000;
+			Ext_VideoExposureTime = 16600;
 			Ext_VideoSize = 150;
 		}
 	}
@@ -200,14 +203,17 @@ void SettingScene::SetQingjingCallBack(CCObject* obj)
 	CCMenuItemToggle* pItem = (CCMenuItemToggle*)obj;
 	if (pItem->getSelectedIndex() == 0)
 	{
+		Ext_IsIndoor = false;
 		Ext_VideoGain = 5;
 	}
 	else if (pItem->getSelectedIndex() == 1)
 	{
+		Ext_IsIndoor = false;
 		Ext_VideoGain = 32;
 	}
 	else if (pItem->getSelectedIndex() == 2)
 	{
+		Ext_IsIndoor = true;
 		Ext_VideoGain = 64;
 	}
 }
@@ -254,7 +260,7 @@ void SettingScene::menuFramesCallBack(CCObject* obj)
 		m_pFrames60->setEnabled(false);
 		m_pFrames300->setEnabled(true);
 		Ext_FrameRate = 60;
-		Ext_VideoExposureTime = 15000;
+		Ext_VideoExposureTime = 16600;
 	}
 	else
 	{

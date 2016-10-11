@@ -67,6 +67,7 @@ bool PostureAnalysisScene::init()
 	m_bIsStepPlay = false;
 	m_bIsVisibleMenu = true;
 	m_bSetMode = true;
+	m_bIsExpose = false;
 
 	CCSprite* beijing1 = CCSprite::create("VideoUI/beijing1.png");
 	beijing1->setPosition(ccp(VISIBLEW/2,VISIBLEH/2));
@@ -362,6 +363,11 @@ bool PostureAnalysisScene::init()
 	//	m_pMenu->addChild(pDataAnalysisItem);
 	//}
 
+	m_pWarningLable = CCLabelTTF::create(GBKToUTF8("帧率过低，返回设置修改情景模式为：室内\n").c_str(),"Arial",72);
+	m_pWarningLable->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));
+	m_pWarningLable->setVisible(false);
+	this->addChild(m_pWarningLable);
+
 	this->schedule(schedule_selector(PostureAnalysisScene::Update), m_curSingle);
 	Ext_IsThreadOn = true;
 
@@ -590,6 +596,18 @@ void PostureAnalysisScene::Update(float dt)
 	{
 		CCMessageBox("请链接小盒子", "警告！");
 		CCDirector::sharedDirector()->end();
+	}
+	if(m_bIsExpose!=Ext_IsExpose)
+	{
+		m_bIsExpose = Ext_IsExpose;
+		if(m_bIsExpose)
+		{
+			m_pWarningLable->setVisible(true);
+		}
+		else
+		{
+			m_pWarningLable->setVisible(false);
+		}
 	}
 	//if (Ext_IsGolfXI)
 	//{

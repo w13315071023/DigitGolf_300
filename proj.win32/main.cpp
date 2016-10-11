@@ -93,7 +93,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                        LPTSTR    lpCmdLine,
                        int       nCmdShow)
 {
-	Ext_TiaoShi = false;
+	Ext_TiaoShi = true;
 	if (Ext_TiaoShi && AllocConsole())
 	{
 		freopen("CONOUT$", "w", stdout);

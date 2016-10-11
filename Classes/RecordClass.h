@@ -28,5 +28,7 @@ public:
 	int getBuffIndex();
 	void setExposureTime(float ExposureTime);
 	void setGain(int Gain);
+	void setAeState(bool AeState);
 };
 extern DWORD WINAPI ThreadCallBack( LPVOID lpParam );
+extern void MySleep(int dTime);

@@ -153,6 +153,7 @@ void HelloWorld::menuCallback(CCObject* pSender)
 	m_isBeginButtonOn = true;
 	printf("进入系统\n");
 	Ext_IsResetGG = true;
+	Ext_IsExpose = false;
 	DataMager::shareDataMager()->m_curCuetype = this->m_curCueType;
 	DataMager::shareDataMager()->m_curGender = this->m_curGender;
 	DataMager::shareDataMager()->SaveData();
@@ -162,13 +163,29 @@ void HelloWorld::menuCallback(CCObject* pSender)
 
 	if (MovieVideoLayer::m_Camera1)
 	{
-		MovieVideoLayer::m_Camera1->setExposureTime(Ext_VideoExposureTime);
-		MovieVideoLayer::m_Camera1->setGain(Ext_VideoGain);
+		if(Ext_IsIndoor == true)
+		{
+			MovieVideoLayer::m_Camera1->setAeState(false);
+			MovieVideoLayer::m_Camera1->setExposureTime(Ext_VideoExposureTime);
+			MovieVideoLayer::m_Camera1->setGain(Ext_VideoGain);
+		}
+		else
+		{
+			MovieVideoLayer::m_Camera1->setAeState(true);
+		}
 	}
 	if (MovieVideoLayer::m_Camera2)
 	{
-		MovieVideoLayer::m_Camera2->setExposureTime(Ext_VideoExposureTime);
-		MovieVideoLayer::m_Camera2->setGain(Ext_VideoGain);
+		if(Ext_IsIndoor == true)
+		{
+			MovieVideoLayer::m_Camera2->setAeState(false);
+			MovieVideoLayer::m_Camera2->setExposureTime(Ext_VideoExposureTime);
+			MovieVideoLayer::m_Camera2->setGain(Ext_VideoGain);
+		}
+		else
+		{
+			MovieVideoLayer::m_Camera2->setAeState(true);
+		}
 	}
 	printf("转到姿势分析界面\n");
 	CCDirector::sharedDirector()->replaceScene(PostureAnalysisScene::CreateScene());
