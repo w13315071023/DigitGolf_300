@@ -79,7 +79,7 @@ bool SettingScene::init()
 		CCMenuItemImage::create("SettingUI/side.png", "SettingUI/side.png"), NULL
 		);
 	pSetCameraItem->setPosition(ccp(830, 397));
-	pSetCameraItem->setSelectedIndex(Ext_IsFrontCamera?0:1);
+	pSetCameraItem->setSelectedIndex(Ext_IsFrontCamera?1:0);
 	//�龰ģʽ
 	CCMenuItemToggle* pSetQingjingItem = CCMenuItemToggle::createWithTarget(
 		this, menu_selector(SettingScene::SetQingjingCallBack),
@@ -231,6 +231,7 @@ void SettingScene::onExit()
 	object.AddMember("StepNum", Ext_StepNum, allocator);
 	object.AddMember("FFmpegStep", Ext_FFmpegStep, allocator);
 	object.AddMember("FrameRate", Ext_FrameRate, allocator);
+	object.AddMember("IsTurnCamera", Ext_IsTurnCamera, allocator);
 
 	saveValue(object, "Setting.json");
 }
@@ -274,10 +275,10 @@ void SettingScene::SetCameraCallBack(CCObject* obj)
 {
 	if (0 == ((CCMenuItemToggle*)obj)->getSelectedIndex())
 	{
-		Ext_IsFrontCamera = true;
+		Ext_IsFrontCamera = false;
 	}
 	else
 	{
-		Ext_IsFrontCamera = false;
+		Ext_IsFrontCamera = true;
 	}
 }

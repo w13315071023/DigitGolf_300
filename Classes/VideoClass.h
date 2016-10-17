@@ -44,6 +44,7 @@ public:
 	AVFrame* m_pYUVFrame;  //YUVÖ¡Êý¾Ý  
 	static SwsContext* pSwsCtx;
 	int m_BitRate;
+	int m_Direction;
 public:
 	VideoClass(void);
 	virtual ~VideoClass(void);

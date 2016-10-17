@@ -16,7 +16,6 @@ public:
 	AVPacket packet;
 	int frameFinished;
 	int PictureSize;
-	int m_Direction;
 	uint8_t* buf;
 public:
 	DemoVideoLayer();

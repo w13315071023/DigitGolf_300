@@ -37,6 +37,7 @@ bool HelloWorld::init()
 		m_curGender = GENDER_MAN;
 		m_isBeginButtonOn = false;
 		m_isEndButtonOn = false;
+		m_bIsTurnCamera = false;
 		
         m_pCueTtpeArr[0] = CCMenuItemImage::create(
 										"HomeUI/yihaomu.png",
@@ -186,7 +187,13 @@ void HelloWorld::menuCallback(CCObject* pSender)
 		{
 			MovieVideoLayer::m_Camera2->setAeState(true);
 		}
+		if (Ext_IsFrontCamera != m_bIsTurnCamera)
+		{
+			swap(MovieVideoLayer::m_Camera1,MovieVideoLayer::m_Camera2);
+			m_bIsTurnCamera = Ext_IsFrontCamera;
+		}
 	}
+	
 	printf("转到姿势分析界面\n");
 	CCDirector::sharedDirector()->replaceScene(PostureAnalysisScene::CreateScene());
 }

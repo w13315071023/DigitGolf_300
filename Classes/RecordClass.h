@@ -10,9 +10,6 @@ public:
 	INT				cameraNum;
 	tSdkCameraCapbility m_sCameraInfo;
 
-	//static pthread_mutex_t m_mutex1;
-	//static pthread_mutex_t m_mutex2;
-
 	float m_curTime;
 	float m_lastTime;
 	int m_BufferIndexMax;

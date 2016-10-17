@@ -1,7 +1,5 @@
 ﻿#include "RecordClass.h"
 
-//pthread_mutex_t RecordClass::m_mutex1 = NULL;
-//pthread_mutex_t RecordClass::m_mutex2 = NULL;
 void MySleep(int dTime)
 {
 	int i = 0;
@@ -99,15 +97,6 @@ void RecordClass::Destructor()
 		}
 		m_Buffer.clear();
 	}
-	//if (m_hCamera == 1)
-	//{
-	//	pthread_mutex_destroy(&m_mutex1);
-	//}
-	//else
-	//{
-	//	pthread_mutex_destroy(&m_mutex2);
-	//}
-
 }
 bool RecordClass::init(tSdkCameraDevInfo CameraInfo)
 {
@@ -128,10 +117,6 @@ bool RecordClass::init(tSdkCameraDevInfo CameraInfo)
 		pVideoRGB24->FrameData = CameraAlignMalloc(BufferSize/3, 16);
 		m_Buffer.push_back(pVideoRGB24);
 	}
-
-	//std::thread myThread(&RecordClass::ThreadCallBack, this);
-	//SetThreadPriority(myThread.native_handle(), THREAD_PRIORITY_HIGHEST);
-	//myThread.detach();
 
 	HANDLE hThread;
 	DWORD dwThreadId;

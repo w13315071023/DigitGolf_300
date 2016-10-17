@@ -50,6 +50,7 @@ bool MovieVideoLayer::init(int Direction)
 	m_Width = 640;
 	m_Height = 480;
 	m_BitRate = 400000;
+	m_Direction = Direction;
 
 	if (Ext_cameraNum == 0)
 	{
@@ -135,7 +136,10 @@ void MovieVideoLayer::TransData()
 	if (m_TransIndex == Ext_VideoSize * Ext_StepNum)
 	{
 		m_TransIndex = 0;
-		m_pTihuan->setVisible(true);
+		if(m_Direction == FRONT)
+		{
+			m_pTihuan->setVisible(true);
+		}
 		return;
 	}
 	for (size_t i = 0; i < Ext_StepNum; i++)
@@ -157,7 +161,10 @@ void MovieVideoLayer::RecordOk()
 	int curIndex = 0;
 	m_TransIndex = 0;
 	this->Record(false);
-	m_pTihuan->setVisible(false);
+	if(m_Direction == FRONT)
+	{
+		m_pTihuan->setVisible(false);
+	}
 	for (size_t i = 0; i < Ext_VideoSize * Ext_StepNum; i ++)
 	{
 		if (i == m_TransIndex+20)

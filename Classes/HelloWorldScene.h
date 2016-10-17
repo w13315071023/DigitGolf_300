@@ -14,6 +14,7 @@ public:
     CCMenuItemImage* m_pGenderArr[2];
 	bool m_isBeginButtonOn;
 	bool m_isEndButtonOn;
+	bool m_bIsTurnCamera;
 
     //³õÊ¼»¯º¯Êý
     virtual bool init();

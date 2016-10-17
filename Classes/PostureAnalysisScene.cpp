@@ -10,7 +10,7 @@ MovieVideoLayer* PostureAnalysisScene::m_pSideMovieVideoLayer = NULL;
 DemoVideoLayer* PostureAnalysisScene::m_pFrontDemoVideoLayer = NULL;
 DemoVideoLayer* PostureAnalysisScene::m_pSideDemoVideoLayer = NULL;
 bool PostureAnalysisScene::m_bIsPlayVideo = false;
-bool PostureAnalysisScene::m_bIsTurnCamera = true;
+bool PostureAnalysisScene::m_bIsTurnCamera = false;
 PostureAnalysisScene::PostureAnalysisScene(void)
 {
 }
@@ -208,11 +208,6 @@ bool PostureAnalysisScene::init()
 		m_pSideMovieVideoLayer->ResetVideoSize();
 		this->addChild(m_pSideMovieVideoLayer);
 
-		if (Ext_IsFrontCamera != m_bIsTurnCamera)
-		{
-			swap(m_pSideMovieVideoLayer,m_pFrontMovieVideoLayer);
-			m_bIsTurnCamera = Ext_IsFrontCamera;
-		}
 		SerialMager::getInstence()->setDelegate2(m_pSideMovieVideoLayer);
 		//创建视图按钮的菜单项
 		CCSprite* beijing3 = CCSprite::create("VideoUI/beijing3.png");
