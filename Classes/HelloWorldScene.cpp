@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "PostureAnalysisScene.h"
 #include "DataMager.h"
+#include "websocketMager.h"
 #include "SerialMager.h"
 #include "SettingScene.h"
 //#include "GolfXIMager.h"
@@ -141,7 +142,6 @@ bool HelloWorld::init()
 								pSetting,NULL);
     pMenu->setPosition(CCPointZero);
     this->addChild(pMenu, 1);
-	this->scheduleUpdate();
     return true;
 }
 //按钮的回调函数
@@ -159,9 +159,15 @@ void HelloWorld::menuCallback(CCObject* pSender)
 	DataMager::shareDataMager()->m_curGender = this->m_curGender;
 	DataMager::shareDataMager()->SaveData();
 	//转到姿势分析界面
-	SerialMager::getInstence()->setThreshold(Ext_SerialThreshold);
 	//GolfXIMager::getInstence()->setClubType(140);
-
+	if(Ext_IsDigitTrak)
+	{
+		websocketMager::getInstence();
+	}
+	else
+	{
+		SerialMager::getInstence()->setThreshold(Ext_SerialThreshold);
+	}
 	if (MovieVideoLayer::m_Camera1)
 	{
 		if(Ext_IsIndoor == true)
@@ -222,7 +228,14 @@ void HelloWorld::menuEndCallback(CCObject* pSender)
 		delete PostureAnalysisScene::m_pSideMovieVideoLayer;
 		PostureAnalysisScene::m_pSideMovieVideoLayer = NULL;
 	}
-	SerialMager::getInstence()->unLoadInstence();
+	if(Ext_IsDigitTrak)
+	{
+		websocketMager::getInstence()->closewebsocket();
+	}
+	else
+	{
+		SerialMager::getInstence()->unLoadInstence();
+	}
 	CCDirector::sharedDirector()->end();
 }
 void HelloWorld::menuSettingCallback(CCObject* pSender)
@@ -275,12 +288,4 @@ void HelloWorld::menuGenderCallback(CCObject* pSender)
 			m_pGenderArr[i]->setEnabled(false);
         }
     }
-}
-void HelloWorld::update(float dt)
-{
-	if (!SerialMager::getInstence()->getComPort())
-	{
-		CCMessageBox("请链接小盒子","警告！");
-		menuEndCallback(NULL);
-	}
 }

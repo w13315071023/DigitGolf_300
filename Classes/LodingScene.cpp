@@ -1,6 +1,5 @@
 #include "LodingScene.h"
 //#include "GolfXIMager.h"
-#include "SerialMager.h"
 #include "HelloWorldScene.h"
 #include "MovieVideoLayer.h"
 #include "RecordClass.h"
@@ -28,7 +27,6 @@ bool LodingScene::init()
 	{
 		return false;
 	}
-
 	Ext_cameraNum = 2;
 
 	tSdkCameraDevInfo	cameraInfo[2] = { NULL };
@@ -60,7 +58,6 @@ bool LodingScene::init()
 	}
 	printf("≥ı ºªØLodingScene\n");
 	//GolfXIMager::getInstence();
-	SerialMager::getInstence();
 	if (Ext_cameraNum != 0)
 	{
 		MovieVideoLayer::m_Camera1 = new RecordClass();
@@ -80,8 +77,9 @@ bool LodingScene::init()
 		Ext_VideoGain = doc["VideoGain"].GetInt();
 		Ext_ToPixels = doc["ToPixels"].GetDouble();
 		Ext_StepNum = doc["StepNum"].GetInt();
+		Ext_FFmpegStep = doc["FFmpegStep"].GetInt();
 		Ext_FrameRate = doc["FrameRate"].GetInt();
-		Ext_IsTurnCamera = doc["FrameRate"].GetBool();
+		//Ext_IsTurnCamera = doc["TurnCamera"].GetBool();
 	}
 	if(Ext_FrameRate == 300)
 	{

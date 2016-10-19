@@ -47,6 +47,7 @@ public:
 	static bool m_bIsPlayVideo;
 	static bool m_bIsTurnCamera;
 	bool m_bIsStepPlay;
+	bool m_bIsPreview;
 	bool m_bIsVisibleMenu;
 	bool m_bSetMode;
 	bool m_bIsExpose;

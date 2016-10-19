@@ -18,7 +18,6 @@ public:
 
     //初始化函数
     virtual bool init();
-	virtual void update(float dt);
     static cocos2d::CCScene* scene();
     //按钮的回调函数
     void menuCallback(CCObject* pSender);

@@ -136,6 +136,7 @@ void MovieVideoLayer::TransData()
 	if (m_TransIndex == Ext_VideoSize * Ext_StepNum)
 	{
 		m_TransIndex = 0;
+		Ext_IsRecordBegin = false;
 		if(m_Direction == FRONT)
 		{
 			m_pTihuan->setVisible(true);

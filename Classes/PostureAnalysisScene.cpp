@@ -3,6 +3,7 @@
 #include "DataMager.h"
 #include "UpLode.h"
 #include "MessageScene.h"
+#include "websocketMager.h"
 
 DrawingLayer* PostureAnalysisScene::m_pDrawingLayer = NULL;
 MovieVideoLayer* PostureAnalysisScene::m_pFrontMovieVideoLayer = NULL;
@@ -65,6 +66,7 @@ bool PostureAnalysisScene::init()
 	m_curSingle = 1.5f / 60.0f;
 	m_bIsPlayVideo = false;
 	m_bIsStepPlay = false;
+	m_bIsPreview = false;
 	m_bIsVisibleMenu = true;
 	m_bSetMode = true;
 	m_bIsExpose = false;
@@ -87,7 +89,14 @@ bool PostureAnalysisScene::init()
 	this->addChild(m_pFrontMovieVideoLayer);
 	if (Ext_cameraNum != 0)
 	{
-		SerialMager::getInstence()->setDelegate1(m_pFrontMovieVideoLayer);
+		if(Ext_IsDigitTrak)
+		{
+			websocketMager::getInstence()->setDelegate1(m_pFrontMovieVideoLayer);
+		}
+		else
+		{
+			SerialMager::getInstence()->setDelegate1(m_pFrontMovieVideoLayer);
+		}
 	}
 	CCMenuItemImage* pBackItem = CCMenuItemImage::create(
 		"VideoUI/fanhuizhuye1.png",
@@ -207,8 +216,14 @@ bool PostureAnalysisScene::init()
 		}
 		m_pSideMovieVideoLayer->ResetVideoSize();
 		this->addChild(m_pSideMovieVideoLayer);
-
-		SerialMager::getInstence()->setDelegate2(m_pSideMovieVideoLayer);
+		if(Ext_IsDigitTrak)
+		{
+			websocketMager::getInstence()->setDelegate2(m_pSideMovieVideoLayer);
+		}
+		else
+		{
+			SerialMager::getInstence()->setDelegate2(m_pSideMovieVideoLayer);
+		}
 		//创建视图按钮的菜单项
 		CCSprite* beijing3 = CCSprite::create("VideoUI/beijing3.png");
 		beijing3->setPosition(ccp(116, 700));
@@ -587,11 +602,23 @@ void PostureAnalysisScene::menuCallback(CCObject* pSender)
 }
 void PostureAnalysisScene::Update(float dt)
 {
-	if (!SerialMager::getInstence()->getComPort())
+	if(Ext_IsDigitTrak)
 	{
-		CCMessageBox("请链接小盒子", "警告！");
-		CCDirector::sharedDirector()->end();
+		if(websocketMager::getInstence()->m_status == "Failed")
+		{
+			CCMessageBox("DigitTrak链接失败", "警告！");
+			CCDirector::sharedDirector()->end();
+		}
 	}
+	else
+	{
+		if (!SerialMager::getInstence()->getComPort())
+		{
+			CCMessageBox("小盒子链接失败", "警告！");
+			CCDirector::sharedDirector()->end();
+		}
+	}
+	
 	if(m_bIsExpose!=Ext_IsExpose)
 	{
 		m_bIsExpose = Ext_IsExpose;
@@ -622,7 +649,10 @@ void PostureAnalysisScene::Update(float dt)
 	//		GolfXIMager::m_IsHitBall = false;
 	//	}
 	//}
-	SerialMager::getInstence()->SeriaUpdate();
+	if(!Ext_IsDigitTrak)
+	{
+		SerialMager::getInstence()->SeriaUpdate();
+	}
 	if (m_bIsPlayVideo == true)
 	{
 		m_StepIndex--;
@@ -671,20 +701,7 @@ void PostureAnalysisScene::Update(float dt)
 			}
 			else
 			{
-				m_pFrontDemoVideoLayer->ReSetVideo();
-				m_pFrontMovieVideoLayer->ReSetVideo();
-				if (Ext_cameraNum == 2)
-				{
-					m_pSideDemoVideoLayer->ReSetVideo();
-					m_pSideMovieVideoLayer->ReSetVideo();
-				}
-				m_bIsPlayVideo = false;
-				m_bIsStepPlay = false;
-				Ext_IsThreadOn = true;
-				Ext_IsRecordBegin = false;
-				CCMenuItemToggle* pToggle = (CCMenuItemToggle*)(m_pMenu->getChildByTag(99));
-				pToggle->setSelectedIndex(0);
-				this->schedule(schedule_selector(PostureAnalysisScene::Update), 1.5f / 60.0f);
+				this->CallbackPreview(m_pPreview);
 			}
 		}
 	}
@@ -699,19 +716,40 @@ void PostureAnalysisScene::Update(float dt)
 			m_pSideMovieVideoLayer->update(dt);
 		}
 	}
-	if (this->m_curMsg != SerialMager::getInstence()->m_curMsg)
+	if(Ext_IsDigitTrak)
 	{
-		m_curMsg = SerialMager::getInstence()->m_curMsg;
-		if (m_curMsg == 2)
+		if (this->m_curMsg != websocketMager::getInstence()->m_curMsg)
 		{
-			this->CallbackPreview(m_pPreview);
-			m_pReadyLabel->setVisible(true);
-			m_pReadyImage->setVisible(true);
+			m_curMsg = websocketMager::getInstence()->m_curMsg;
+			if (m_curMsg == 1)
+			{
+				this->CallbackPreview(m_pPreview);
+				m_pReadyLabel->setVisible(true);
+				m_pReadyImage->setVisible(true);
+			}
+			else
+			{
+				m_pReadyLabel->setVisible(false);
+				m_pReadyImage->setVisible(false);
+			}
 		}
-		else
+	}
+	else
+	{
+		if (this->m_curMsg != SerialMager::getInstence()->m_curMsg)
 		{
-			m_pReadyLabel->setVisible(false);
-			m_pReadyImage->setVisible(false);
+			m_curMsg = SerialMager::getInstence()->m_curMsg;
+			if (m_curMsg == 2)
+			{
+				this->CallbackPreview(m_pPreview);
+				m_pReadyLabel->setVisible(true);
+				m_pReadyImage->setVisible(true);
+			}
+			else
+			{
+				m_pReadyLabel->setVisible(false);
+				m_pReadyImage->setVisible(false);
+			}
 		}
 	}
 }
@@ -771,7 +809,7 @@ void PostureAnalysisScene::CallbackRePlay(CCObject* pSender)
 	if (m_bIsPlayVideo == true)
 	{
 		m_bIsPlayVideo = false;
-
+		m_bIsPreview = false;
 		m_pFrontDemoVideoLayer->ReSetVideo();
 		m_pFrontMovieVideoLayer->ReSetVideo();
 		if (Ext_cameraNum == 2)
@@ -849,6 +887,11 @@ void PostureAnalysisScene::CallbackPause(CCObject* pSender)
 }
 void PostureAnalysisScene::CallbackPreview(CCObject* pSender)
 {
+	if(m_bIsPreview)
+	{
+		return;
+	}
+	m_bIsPreview = true;
 	m_pFrontDemoVideoLayer->ReSetVideo();
 	m_pFrontMovieVideoLayer->ReSetVideo();
 	if (Ext_cameraNum == 2)

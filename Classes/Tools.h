@@ -69,6 +69,7 @@ extern bool Ext_IsDemoVideo;
 extern bool Ext_Is300Frames;
 extern bool Ext_IsExpose;
 extern bool Ext_IsIndoor;
+extern bool Ext_IsDigitTrak;
 
 enum MENUTAG
 {

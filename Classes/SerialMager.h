@@ -5,13 +5,12 @@
 
 class SerialMager :public Reseaver
 {
-private:
-	static SerialMager* sInstence;
-	SerialMager(void);
 public:
-	static SerialMager* getInstence();
+	SerialMager(void);
 	~SerialMager(void);
 	bool init();
+	static SerialMager* sInstence;
+	static SerialMager* getInstence();
 
 	typedef bool(*GET_COM)(char**, int&);
 	typedef bool(*COM_OFF_ON)(const char*);

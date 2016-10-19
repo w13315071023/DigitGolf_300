@@ -40,8 +40,16 @@ bool SettingScene::init()
 	//ÊÓÆµÑÓ³Ù
 	m_VideoSleepSlider = CCControlSlider::create("SettingUI/Slider_1.png", "SettingUI/Slider_2.png", "SettingUI/Slider_3.png");
 	m_VideoSleepSlider->setPosition(ccp(800, 710));
-	m_VideoSleepSlider->setMaximumValue(1500);
-	m_VideoSleepSlider->setMinimumValue(500);
+	if(Ext_IsDigitTrak)
+	{
+		m_VideoSleepSlider->setMaximumValue(1000);
+		m_VideoSleepSlider->setMinimumValue(0);
+	}
+	else
+	{
+		m_VideoSleepSlider->setMaximumValue(1500);
+		m_VideoSleepSlider->setMinimumValue(500);
+	}
 	m_VideoSleepSlider->setValue(Ext_VideoSleep);
 	m_VideoSleepSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingScene::valueChanged), CCControlEventValueChanged);
 

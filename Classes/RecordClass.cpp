@@ -36,10 +36,10 @@ DWORD WINAPI ThreadCallBack( LPVOID lpParam )
 				pThis->m_BufferIndex = (pThis->m_BufferIndex + 1) % pThis->m_BufferIndexMax;
 				CameraReleaseImageBuffer(pThis->m_hCamera, bydFrameBuffer);
 
-				if (Ext_TiaoShi)
-				{
-					printf("时间间隔%f\n", dTime);
-				}
+				//if (Ext_TiaoShi)
+				//{
+				//	printf("时间间隔%f\n", dTime);
+				//}
 				if(Ext_IsIndoor == false&&dTime > 0)
 				{
 
