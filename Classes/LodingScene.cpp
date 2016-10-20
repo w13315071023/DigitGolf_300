@@ -79,7 +79,7 @@ bool LodingScene::init()
 		Ext_StepNum = doc["StepNum"].GetInt();
 		Ext_FFmpegStep = doc["FFmpegStep"].GetInt();
 		Ext_FrameRate = doc["FrameRate"].GetInt();
-		//Ext_IsTurnCamera = doc["TurnCamera"].GetBool();
+		Ext_IsTurnCamera = doc["TurnCamera"].GetBool();
 	}
 	if(Ext_FrameRate == 300)
 	{

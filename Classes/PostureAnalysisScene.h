@@ -78,5 +78,6 @@ public:
 	void CallbackUpload(CCObject* pSender);
 	void CallbackSaveVideo(CCObject* pSender);
 	void CallbackSwapVideo(CCObject* pSender);
+	void QuitSystem();
 };
 

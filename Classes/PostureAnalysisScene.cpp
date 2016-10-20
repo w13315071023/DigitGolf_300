@@ -4,6 +4,7 @@
 #include "UpLode.h"
 #include "MessageScene.h"
 #include "websocketMager.h"
+#include "RecordClass.h"
 
 DrawingLayer* PostureAnalysisScene::m_pDrawingLayer = NULL;
 MovieVideoLayer* PostureAnalysisScene::m_pFrontMovieVideoLayer = NULL;
@@ -604,10 +605,10 @@ void PostureAnalysisScene::Update(float dt)
 {
 	if(Ext_IsDigitTrak)
 	{
-		if(websocketMager::getInstence()->m_status == "Failed")
+		if(websocketMager::getInstence()->m_status == "Failed"||websocketMager::getInstence()->m_status == "Close")
 		{
 			CCMessageBox("DigitTrakÁ´½ÓÊ§°Ü", "¾¯¸æ£¡");
-			CCDirector::sharedDirector()->end();
+			this->QuitSystem();
 		}
 	}
 	else
@@ -615,7 +616,7 @@ void PostureAnalysisScene::Update(float dt)
 		if (!SerialMager::getInstence()->getComPort())
 		{
 			CCMessageBox("Ğ¡ºĞ×ÓÁ´½ÓÊ§°Ü", "¾¯¸æ£¡");
-			CCDirector::sharedDirector()->end();
+			this->QuitSystem();
 		}
 	}
 	
@@ -707,11 +708,11 @@ void PostureAnalysisScene::Update(float dt)
 	}
 	else
 	{
-		if (Ext_cameraNum)
+		if (m_pFrontMovieVideoLayer)
 		{
 			m_pFrontMovieVideoLayer->update(dt);
 		}
-		if (Ext_cameraNum == 2)
+		if (m_pSideMovieVideoLayer)
 		{
 			m_pSideMovieVideoLayer->update(dt);
 		}
@@ -947,4 +948,36 @@ void PostureAnalysisScene::CallbackSwapVideo(CCObject* pSender)
 		m_pSideDemoVideoLayer->ReSetVideo();
 		m_pSideMovieVideoLayer->ReSetVideo();
 	}
+}
+void PostureAnalysisScene::QuitSystem()
+{
+	Ext_IsTurnEnd = true;
+	this->unschedule(schedule_selector(PostureAnalysisScene::Update));
+	if (m_pFrontMovieVideoLayer)
+	{
+		m_pFrontMovieVideoLayer->m_Camera->Destructor();
+		delete m_pFrontMovieVideoLayer;
+		m_pFrontMovieVideoLayer = NULL;
+	}
+	if (m_pSideMovieVideoLayer)
+	{
+		m_pSideMovieVideoLayer->m_Camera->Destructor();
+		delete m_pSideMovieVideoLayer;
+		m_pSideMovieVideoLayer = NULL;
+	}
+	if (m_pFrontDemoVideoLayer)
+	{
+		delete m_pFrontDemoVideoLayer;
+		m_pFrontDemoVideoLayer = NULL;
+	}
+	if (m_pSideDemoVideoLayer)
+	{
+		delete m_pSideDemoVideoLayer;
+		m_pSideDemoVideoLayer = NULL;
+	}
+	if(!Ext_IsDigitTrak)
+	{
+		SerialMager::getInstence()->unLoadInstence();
+	}
+	CCDirector::sharedDirector()->end();
 }

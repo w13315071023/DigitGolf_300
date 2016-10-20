@@ -22,7 +22,6 @@ public:
     static MovieVideoLayer* create(int Direction);
 	bool init(int Direction);
 	void update(float dt);
-	void Record(bool isRecord);
 	void TransData();
 	void RecordOk();
 	void ResetVideoSize();

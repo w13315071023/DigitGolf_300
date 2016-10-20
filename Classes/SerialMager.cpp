@@ -91,18 +91,7 @@ void SerialMager::SeriaUpdate()
 		return;
 	}
 
-	if (m_curMsg == 2)
-	{
-		if (m_Delegate1)
-		{
-			m_Delegate1->Record(true);
-		}
-		if (m_Delegate2)
-		{
-			m_Delegate2->Record(true);
-		}
-	}
-	else if (m_curMsg == 3)
+	if (m_curMsg == 3)
 	{
 		if (Ext_IsRecordBegin == true)
 		{
@@ -125,17 +114,6 @@ void SerialMager::SeriaUpdate()
 		CCMenuItemToggle* pToggle = (CCMenuItemToggle*)(pLayer->m_pMenu->getChildByTag(99));
 		pToggle->setSelectedIndex(1);
 		pLayer->CallbackPause(pToggle);
-	}
-	else if (m_curMsg == 4)
-	{
-		if (m_Delegate1)
-		{
-			m_Delegate1->Record(false);
-		}
-		if (m_Delegate2)
-		{
-			m_Delegate2->Record(false);
-		}
 	}
 }
 SerialMager::~SerialMager(void)

@@ -156,7 +156,6 @@ struct GolfData
 class Sender
 {
 public:
-	virtual void Record(bool isRecord) = 0;
 	virtual void RecordOk() = 0;
 };
 class Reseaver

@@ -122,11 +122,6 @@ void MovieVideoLayer::update(float dt)
 		CCSize(630, 470));
 	m_pSprite->initWithTexture(m_pTexture);
 }
-void MovieVideoLayer::Record(bool isRecord)
-{
-	m_IsRecord = isRecord;
-	m_IsPlayOver = isRecord;
-}
 void MovieVideoLayer::TransData()
 {
 	if (m_TransIndex < 20 || Ext_IsRecordBegin == false)
@@ -161,7 +156,7 @@ void MovieVideoLayer::RecordOk()
 {
 	int curIndex = 0;
 	m_TransIndex = 0;
-	this->Record(false);
+	m_IsPlayOver = false;
 	if(m_Direction == FRONT)
 	{
 		m_pTihuan->setVisible(false);

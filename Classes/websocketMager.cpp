@@ -116,7 +116,7 @@ void websocketMager::on_message(websocketpp::connection_hdl, client::message_ptr
 	
 	if (str.substr(2, 4) == "data")
 	{
-		std::cout <<"data" << '\n';
+		printf("m_curMsg = data\n");
 	}
 	if (str.substr(2, 5) != "state")
 	{
@@ -128,30 +128,8 @@ void websocketMager::on_message(websocketpp::connection_hdl, client::message_ptr
 	{
 		return;
 	}
-	PostureAnalysisScene* pLayer = (PostureAnalysisScene*)CCDirector::sharedDirector()->getRunningScene()->getChildByTag(98);
-	switch(m_curMsg)
+	if(m_curMsg == 3)
 	{
-	case 0:
-		if (m_Delegate1)
-		{
-			m_Delegate1->Record(false);
-		}
-		if (m_Delegate2)
-		{
-			m_Delegate2->Record(false);
-		}
-		break;
-	case 1:
-		if (m_Delegate1)
-		{
-			m_Delegate1->Record(true);
-		}
-		if (m_Delegate2)
-		{
-			m_Delegate2->Record(true);
-		}
-		break;
-	case 3:
 		Ext_IsRecordBegin = true;
 		Sleep(Ext_VideoSleep);
 		Ext_IsThreadOn = false;
@@ -164,9 +142,9 @@ void websocketMager::on_message(websocketpp::connection_hdl, client::message_ptr
 		{
 			m_Delegate2->RecordOk();
 		}
+		PostureAnalysisScene* pLayer = (PostureAnalysisScene*)CCDirector::sharedDirector()->getRunningScene()->getChildByTag(98);
 		CCMenuItemToggle* pToggle = (CCMenuItemToggle*)(pLayer->m_pMenu->getChildByTag(99));
 		pToggle->setSelectedIndex(1);
 		pLayer->CallbackPause(pToggle);
-		break;
 	}
 }
