@@ -38,6 +38,7 @@ bool SerialMager::init()
 	int index = GetLastError();
 	if (!hDll)
 	{
+		printf("SerialDllError = %d\n",index);
 		return false;
 	}
 	get_com_port = (GET_COM)GetProcAddress(hDll, (LPCSTR)"?get_com_port@@YA_NPEAPEADAEAH@Z");

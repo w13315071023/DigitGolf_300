@@ -26,7 +26,7 @@ extern bool Ext_IsDemoVideo = true;
 extern bool Ext_Is300Frames = false;
 extern bool Ext_IsExpose = false;
 extern bool Ext_IsIndoor = false;
-extern bool Ext_IsDigitTrak = true;
+extern bool Ext_IsDigitTrak = false;
 
 string GBKToUTF8(const string& strGBK)
 {

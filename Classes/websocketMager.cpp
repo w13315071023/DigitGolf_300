@@ -32,18 +32,18 @@ websocketMager* websocketMager::getInstence()
 	endpoint.start_perpetual();
 
 	websocketpp::lib::shared_ptr<websocketpp::lib::thread> thread = websocketpp::lib::make_shared<websocketpp::lib::thread>(&client::run, &endpoint);
-	//con = endpoint.get_connection("ws://172.17.1.201:8000/", ec);
 	//con = endpoint.get_connection("ws://localhost:8000/", ec);
-	con = endpoint.get_connection("ws://192.168.2.129:8000/", ec);
-
+	//con = endpoint.get_connection("ws://192.168.2.129:8000/", ec);
+	con = endpoint.get_connection("ws://172.17.1.201:8000/", ec);
+	
 	if (ec)
 	{
 		std::cout << "> Connect initialization error: " << ec.message() << std::endl;
 	}
 	int EXT_Id = 0;
 	//metadata_ptr = websocketpp::lib::make_shared<websocketMager>(EXT_Id, con->get_handle(), "ws://localhost:8000/");
-	//metadata_ptr = websocketpp::lib::make_shared<websocketMager>(EXT_Id, con->get_handle(), "ws://172.17.1.201:8000/");
-	metadata_ptr = websocketpp::lib::make_shared<websocketMager>(EXT_Id, con->get_handle(), "ws://192.168.2.129:8000/");
+	//metadata_ptr = websocketpp::lib::make_shared<websocketMager>(EXT_Id, con->get_handle(), "ws://192.168.2.129:8000/");
+	metadata_ptr = websocketpp::lib::make_shared<websocketMager>(EXT_Id, con->get_handle(), "ws://172.17.1.201:8000/");
 
 	con->set_open_handler(websocketpp::lib::bind(
 		&websocketMager::on_open,

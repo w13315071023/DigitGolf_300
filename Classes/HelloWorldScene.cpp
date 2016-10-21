@@ -160,11 +160,7 @@ void HelloWorld::menuCallback(CCObject* pSender)
 	DataMager::shareDataMager()->SaveData();
 	//转到姿势分析界面
 	//GolfXIMager::getInstence()->setClubType(140);
-	if(Ext_IsDigitTrak)
-	{
-		websocketMager::getInstence();
-	}
-	else
+	if(!Ext_IsDigitTrak)
 	{
 		SerialMager::getInstence()->setThreshold(Ext_SerialThreshold);
 	}

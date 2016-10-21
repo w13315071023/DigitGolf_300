@@ -4,6 +4,8 @@
 #include "MovieVideoLayer.h"
 #include "RecordClass.h"
 #include "ResetGGMager.h"
+#include "websocketMager.h"
+#include "SerialMager.h"
 
 
 RecordClass* MovieVideoLayer::m_Camera1 = NULL;
@@ -27,6 +29,9 @@ bool LodingScene::init()
 	{
 		return false;
 	}
+	websocketMager::getInstence();
+	SerialMager::getInstence();
+
 	Ext_cameraNum = 2;
 
 	tSdkCameraDevInfo	cameraInfo[2] = { NULL };
@@ -79,7 +84,7 @@ bool LodingScene::init()
 		Ext_StepNum = doc["StepNum"].GetInt();
 		Ext_FFmpegStep = doc["FFmpegStep"].GetInt();
 		Ext_FrameRate = doc["FrameRate"].GetInt();
-		Ext_IsTurnCamera = doc["TurnCamera"].GetBool();
+		//Ext_IsTurnCamera = doc["TurnCamera"].GetBool();
 	}
 	if(Ext_FrameRate == 300)
 	{

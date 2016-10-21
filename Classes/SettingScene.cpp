@@ -35,11 +35,11 @@ bool SettingScene::init()
 	this->addChild(pBackGround,-1);
 	//设置靶心距离
 	UINode* pNode = UINode::create();
-	pNode->setPosition(ccp(830,315));
+	pNode->setPosition(ccp(1510,630));
 	this->addChild(pNode);
 	//视频延迟
 	m_VideoSleepSlider = CCControlSlider::create("SettingUI/Slider_1.png", "SettingUI/Slider_2.png", "SettingUI/Slider_3.png");
-	m_VideoSleepSlider->setPosition(ccp(800, 710));
+	m_VideoSleepSlider->setPosition(ccp(760, 710));
 	if(Ext_IsDigitTrak)
 	{
 		m_VideoSleepSlider->setMaximumValue(1000);
@@ -53,40 +53,29 @@ bool SettingScene::init()
 	m_VideoSleepSlider->setValue(Ext_VideoSleep);
 	m_VideoSleepSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingScene::valueChanged), CCControlEventValueChanged);
 
-	char name[32];
-	sprintf(name, "%d", Ext_VideoSleep);
-	m_VideoSleepLabel = CCLabelTTF::create(name, "arial", 24);
-	m_VideoSleepLabel->setPosition(ccp(1150, 710));
-	
 	//声音预制
 	m_SerialThresholdSlider = CCControlSlider::create("SettingUI/Slider_1.png", "SettingUI/Slider_2.png", "SettingUI/Slider_3.png");
-	m_SerialThresholdSlider->setPosition(ccp(800, 810));
+	m_SerialThresholdSlider->setPosition(ccp(760, 810));
 	m_SerialThresholdSlider->setMaximumValue(1000);
 	m_SerialThresholdSlider->setMinimumValue(500);
 	m_SerialThresholdSlider->setValue(Ext_SerialThreshold);
 	m_SerialThresholdSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingScene::valueChanged), CCControlEventValueChanged);
-	sprintf(name, "%d", Ext_SerialThreshold);
-	m_SerialThresholdLabel = CCLabelTTF::create(name, "arial", 24);
-	m_SerialThresholdLabel->setPosition(ccp(1150, 810));
-
+	
 	//视频亮度
 	m_VideoGainSlider = CCControlSlider::create("SettingUI/Slider_1.png", "SettingUI/Slider_2.png", "SettingUI/Slider_3.png");
-	m_VideoGainSlider->setPosition(ccp(800, 610));
+	m_VideoGainSlider->setPosition(ccp(760, 610));
 	m_VideoGainSlider->setMaximumValue(64);
 	m_VideoGainSlider->setMinimumValue(1);
 	m_VideoGainSlider->setValue(Ext_VideoGain);
 	m_VideoGainSlider->addTargetWithActionForControlEvents(this, cccontrol_selector(SettingScene::valueChanged), CCControlEventValueChanged);
-	sprintf(name, "%d", Ext_VideoGain);
-	m_VideoGainLabel = CCLabelTTF::create(name, "arial", 24);
-	m_VideoGainLabel->setPosition(ccp(1150, 610));
-
+	
 	//相机位置
 	CCMenuItemToggle* pSetCameraItem = CCMenuItemToggle::createWithTarget(
 		this, menu_selector(SettingScene::SetCameraCallBack),
 		CCMenuItemImage::create("SettingUI/front.png", "SettingUI/front.png"),
 		CCMenuItemImage::create("SettingUI/side.png", "SettingUI/side.png"), NULL
 		);
-	pSetCameraItem->setPosition(ccp(830, 397));
+	pSetCameraItem->setPosition(ccp(1510, 720));
 	pSetCameraItem->setSelectedIndex(Ext_IsFrontCamera?1:0);
 	//情景模式
 	CCMenuItemToggle* pSetQingjingItem = CCMenuItemToggle::createWithTarget(
@@ -95,7 +84,7 @@ bool SettingScene::init()
 		CCMenuItemImage::create("SettingUI/cloudy.png", "SettingUI/cloudy.png"),
 		CCMenuItemImage::create("SettingUI/indoor.png", "SettingUI/indoor.png"), NULL
 		);
-	pSetQingjingItem->setPosition(ccp(830, 480));
+	pSetQingjingItem->setPosition(ccp(1510, 800));
 
 	if (Ext_VideoGain <= 5)
 	{
@@ -119,10 +108,10 @@ bool SettingScene::init()
 	{
 		//默认参考按钮
 		m_pDemoVideo = CCMenuItemImage::create("SettingUI/default_on.png", "SettingUI/default_off.png","SettingUI/default_off.png", this, menu_selector(SettingScene::menuVideoCallBack));
-		m_pDemoVideo->setPosition(ccp(1420, 320));
+		m_pDemoVideo->setPosition(ccp(955, 420));
 		//自定义按钮
 		m_pSelfVideo = CCMenuItemImage::create("SettingUI/custom_on.png", "SettingUI/custom_off.png","SettingUI/custom_off.png", this, menu_selector(SettingScene::menuVideoCallBack));
-		m_pSelfVideo->setPosition(ccp(1420, 420));
+		m_pSelfVideo->setPosition(ccp(955, 320));
 		if(Ext_IsDemoVideo == true)
 		{
 			m_pDemoVideo->setEnabled(false);
@@ -135,10 +124,10 @@ bool SettingScene::init()
 	//系统选择
 	{
 		m_pFrames60 = CCMenuItemImage::create("SettingUI/60frames_on.png", "SettingUI/60frames_off.png","SettingUI/60frames_off.png", this, menu_selector(SettingScene::menuFramesCallBack));
-		m_pFrames60->setPosition(ccp(1420, 630));
+		m_pFrames60->setPosition(ccp(450, 420));
 
 		m_pFrames300 = CCMenuItemImage::create("SettingUI/300frames_on.png", "SettingUI/300frames_off.png","SettingUI/300frames_off.png", this, menu_selector(SettingScene::menuFramesCallBack));
-		m_pFrames300->setPosition(ccp(1420, 730));
+		m_pFrames300->setPosition(ccp(450, 320));
 		if(Ext_Is300Frames)
 		{
 			if(Ext_FrameRate == 300)
@@ -162,6 +151,24 @@ bool SettingScene::init()
 			Ext_VideoSize = 150;
 		}
 	}
+	//触发器选择
+	{
+		m_pSerialP = CCMenuItemImage::create("SettingUI/box_on.png", "SettingUI/box_off.png","SettingUI/box_off.png", this, menu_selector(SettingScene::menuDigitTrakCallBack));
+		m_pSerialP->setPosition(ccp(1460, 420));
+
+		m_pDigitTrak = CCMenuItemImage::create("SettingUI/DigitTrak_on.png", "SettingUI/DigitTrak_off.png","SettingUI/DigitTrak_off.png", this, menu_selector(SettingScene::menuDigitTrakCallBack));
+		m_pDigitTrak->setPosition(ccp(1460, 320));
+		if(Ext_IsDigitTrak)
+		{
+			m_pDigitTrak->setEnabled(false);
+			m_pSerialP->setEnabled(true);
+		}
+		else
+		{
+			m_pSerialP->setEnabled(false);
+			m_pDigitTrak->setEnabled(true);
+		}
+	}
 
 	MyMenu* pMenu = MyMenu::create(
 		pEnter,
@@ -171,39 +178,31 @@ bool SettingScene::init()
 		pSetQingjingItem,
 		m_pFrames60,
 		m_pFrames300,
+		m_pSerialP,
+		m_pDigitTrak,
 		NULL);
 	pMenu->setPosition(CCPointZero);
 
 	this->addChild(m_VideoSleepSlider);
 	this->addChild(m_SerialThresholdSlider);
 	this->addChild(m_VideoGainSlider);
-	this->addChild(m_VideoSleepLabel);
-	this->addChild(m_SerialThresholdLabel);
-	this->addChild(m_VideoGainLabel);
 	this->addChild(pMenu);
 
 	return true;
 }
 void SettingScene::valueChanged(CCObject* sender, CCControlEvent controlEvent)
 {
-	char value[32];
 	if (sender == m_VideoSleepSlider)
 	{
 		Ext_VideoSleep = (int)m_VideoSleepSlider->getValue();
-		sprintf(value, "%d", Ext_VideoSleep);
-		m_VideoSleepLabel->setString(value);
 	}
 	else if (sender == m_SerialThresholdSlider)
 	{
 		Ext_SerialThreshold = (int)m_SerialThresholdSlider->getValue();
-		sprintf(value, "%d", Ext_SerialThreshold);
-		m_SerialThresholdLabel->setString(value);
 	}
 	else if (sender == m_VideoGainSlider)
 	{
 		Ext_VideoGain = (int)m_VideoGainSlider->getValue();
-		sprintf(value, "%d", Ext_VideoGain);
-		m_VideoGainLabel->setString(value);
 	}
 }
 void SettingScene::SetQingjingCallBack(CCObject* obj)
@@ -277,6 +276,17 @@ void SettingScene::menuFramesCallBack(CCObject* obj)
 		m_pFrames300->setEnabled(false);
 		Ext_FrameRate = 300;
 		Ext_VideoExposureTime = 3300;
+	}
+}
+void SettingScene::menuDigitTrakCallBack(CCObject* obj)
+{
+	if(m_pDigitTrak == obj)
+	{
+		Ext_IsDigitTrak = true;
+	}
+	else
+	{
+		Ext_IsDigitTrak = false;
 	}
 }
 void SettingScene::SetCameraCallBack(CCObject* obj)
