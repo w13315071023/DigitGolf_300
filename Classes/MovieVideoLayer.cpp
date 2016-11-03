@@ -173,39 +173,11 @@ void MovieVideoLayer::RecordOk()
 		m_FrameImageHead = m_Camera->getBufferByIndex(curIndex)->FrameHead;
 		try
 		{
-			printf("curIndex		= %d\n",curIndex);
-			printf("uBytes			= %d\n",m_FrameImageHead.uBytes);
 			int CameraError = CameraImageProcess(m_Camera->m_hCamera,
 				m_Camera->getBufferByIndex(curIndex)->FrameData,
 				m_pFrameImageRGB,
 				&m_FrameImageHead);
 			swap(m_pFrameImageRGB, m_VideoList[i]);
-			if(CameraError == -6)
-			{
-				printf("curIndex		= %d\n",curIndex);
-				printf("CameraError		= %d\n",CameraError);
-				printf("CameraHandle	= %d\n",m_Camera->m_hCamera);
-				printf("inFrameData		= %x\n",m_Camera->getBufferByIndex(curIndex)->FrameData);
-				printf("outFrameData	= %x\n",m_pFrameImageRGB);
-				printf("--------------------------FrameHead-----------------------------\n");
-				printf("uiMediaType		= %d\n",m_FrameImageHead.uiMediaType);
-				printf("uBytes			= %d\n",m_FrameImageHead.uBytes);
-				printf("iWidth			= %d\n",m_FrameImageHead.iWidth);
-				printf("iHeight			= %d\n",m_FrameImageHead.iHeight);
-				printf("iWidthZoomSw	= %d\n",m_FrameImageHead.iWidthZoomSw);
-				printf("iHeightZoomSw	= %d\n",m_FrameImageHead.iHeightZoomSw);
-				printf("bIsTrigger		= %d\n",m_FrameImageHead.bIsTrigger);
-				printf("uiTimeStamp		= %d\n",m_FrameImageHead.uiTimeStamp);
-				printf("uiExpTime		= %d\n",m_FrameImageHead.uiExpTime);
-				printf("fAnalogGain		= %f\n",m_FrameImageHead.fAnalogGain);
-				printf("iGamma			= %d\n",m_FrameImageHead.iGamma);
-				printf("iContrast		= %d\n",m_FrameImageHead.iContrast);
-				printf("iSaturation		= %d\n",m_FrameImageHead.iSaturation);
-				printf("fRgain			= %f\n",m_FrameImageHead.fRgain);
-				printf("fGgain			= %f\n",m_FrameImageHead.fGgain);
-				printf("fBgain			= %f\n",m_FrameImageHead.fBgain);
-				printf("--------------------------FrameHead------------------------------\n");
-			}
 		}
 		catch (...)
 		{

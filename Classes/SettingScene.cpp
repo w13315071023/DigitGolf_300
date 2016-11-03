@@ -216,7 +216,7 @@ void SettingScene::SetQingjingCallBack(CCObject* obj)
 	else if (pItem->getSelectedIndex() == 1)
 	{
 		Ext_IsIndoor = false;
-		Ext_VideoGain = 32;
+		Ext_VideoGain = 30;
 	}
 	else if (pItem->getSelectedIndex() == 2)
 	{
@@ -238,8 +238,8 @@ void SettingScene::onExit()
 	object.AddMember("StepNum", Ext_StepNum, allocator);
 	object.AddMember("FFmpegStep", Ext_FFmpegStep, allocator);
 	object.AddMember("FrameRate", Ext_FrameRate, allocator);
-	object.AddMember("IsTurnCamera", Ext_IsTurnCamera, allocator);
-
+	object.AddMember("IsFrontCamera", Ext_IsFrontCamera, allocator);
+	object.AddMember("IsDigitTrak", Ext_IsDigitTrak, allocator);
 	saveValue(object, "Setting.json");
 }
 void SettingScene::menuEnterCallBack(CCObject* obj)
@@ -283,10 +283,16 @@ void SettingScene::menuDigitTrakCallBack(CCObject* obj)
 	if(m_pDigitTrak == obj)
 	{
 		Ext_IsDigitTrak = true;
+		Ext_VideoSleep = 590;
+		m_pDigitTrak->setEnabled(false);
+		m_pSerialP->setEnabled(true);
 	}
 	else
 	{
 		Ext_IsDigitTrak = false;
+		Ext_VideoSleep = 1000;
+		m_pDigitTrak->setEnabled(true);
+		m_pSerialP->setEnabled(false);
 	}
 }
 void SettingScene::SetCameraCallBack(CCObject* obj)

@@ -26,9 +26,11 @@ public:
 	void on_fail(client * c, websocketpp::connection_hdl hdl);
 	void on_close(client * c, websocketpp::connection_hdl hdl);
 	void on_message(websocketpp::connection_hdl, client::message_ptr msg);
+	void socketUpdate();
 
 	int m_id;
 	int m_curMsg;
+	int m_oldMsg;
 	websocketpp::connection_hdl m_hdl;
 	static websocketMager::ptr metadata_ptr;
 	static client endpoint;

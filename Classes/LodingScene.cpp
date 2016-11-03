@@ -1,12 +1,11 @@
 #include "LodingScene.h"
+#include "websocketMager.h"
+#include "SerialMager.h"
 //#include "GolfXIMager.h"
 #include "HelloWorldScene.h"
 #include "MovieVideoLayer.h"
 #include "RecordClass.h"
 #include "ResetGGMager.h"
-#include "websocketMager.h"
-#include "SerialMager.h"
-
 
 RecordClass* MovieVideoLayer::m_Camera1 = NULL;
 RecordClass* MovieVideoLayer::m_Camera2 = NULL;
@@ -29,9 +28,11 @@ bool LodingScene::init()
 	{
 		return false;
 	}
+	int ComId = SerialMager::getInstence()->getComPort();
+	printf("ComID = %d\n",ComId);
+	
 	websocketMager::getInstence();
-	SerialMager::getInstence();
-
+	
 	Ext_cameraNum = 2;
 
 	tSdkCameraDevInfo	cameraInfo[2] = { NULL };
@@ -84,7 +85,8 @@ bool LodingScene::init()
 		Ext_StepNum = doc["StepNum"].GetInt();
 		Ext_FFmpegStep = doc["FFmpegStep"].GetInt();
 		Ext_FrameRate = doc["FrameRate"].GetInt();
-		//Ext_IsTurnCamera = doc["TurnCamera"].GetBool();
+		Ext_IsFrontCamera = doc["IsFrontCamera"].GetBool();
+		Ext_IsDigitTrak = doc["IsDigitTrak"].GetBool();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 	}
 	if(Ext_FrameRate == 300)
 	{
@@ -93,6 +95,14 @@ bool LodingScene::init()
 	else
 	{
 		Ext_VideoExposureTime = 16600;
+	}
+	if(Ext_VideoGain>32)
+	{
+		Ext_IsIndoor = true;
+	}
+	else
+	{
+		Ext_IsIndoor = false;
 	}
 	CCSprite* pBackGround = CCSprite::create("HomeUI/Bg.png");
 	pBackGround->setPosition(ccp(VISIBLEW / 2, VISIBLEH / 2));

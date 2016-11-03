@@ -1,6 +1,7 @@
 #pragma once
 #include "Tools.h"
 #include "PostureAnalysisScene.h"
+#include "SerialDll.h"
 
 
 class SerialMager :public Reseaver
@@ -12,17 +13,17 @@ public:
 	static SerialMager* sInstence;
 	static SerialMager* getInstence();
 
-	typedef bool(*GET_COM)(char**, int&);
-	typedef bool(*COM_OFF_ON)(const char*);
-	typedef int(*FETCH_MSG)(void);
-	typedef void(*SET_THRESHOLD)(int);
-	char* com_num;
+	//typedef bool(*GET_COM)(char**, int&);
+	//typedef bool(*COM_OFF_ON)(const char*);
+	//typedef int(*FETCH_MSG)(void);
+	//typedef void(*SET_THRESHOLD)(int);
+	char* com_num; 
 	bool m_IsCom;
 	int m_curMsg;
-	GET_COM get_com_port;
-	COM_OFF_ON open_com_port;
-	FETCH_MSG fetch_msg;
-	SET_THRESHOLD set_threshold;
+	//GET_COM get_com_port;
+	//COM_OFF_ON open_com_port;
+	//FETCH_MSG fetch_msg;
+	//SET_THRESHOLD set_threshold;
 	void unLoadInstence();
 	void SeriaUpdate();
 	void setThreshold(int threshold);

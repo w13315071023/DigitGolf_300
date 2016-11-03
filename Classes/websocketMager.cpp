@@ -114,20 +114,23 @@ void websocketMager::on_message(websocketpp::connection_hdl, client::message_ptr
 {
 	std::string str = msg->get_payload();
 	
-	if (str.substr(2, 4) == "data")
-	{
-		printf("m_curMsg = data\n");
-	}
-	if (str.substr(2, 5) != "state")
+	if (str.substr(2, 5) != "state"||!Ext_IsDigitTrak)
 	{
 		return;
 	}
 	m_curMsg = atoi(str.substr(10, 1).c_str());
-	printf("m_curMsg = %d\n",m_curMsg);
+}
+void websocketMager::socketUpdate()
+{
 	if(PostureAnalysisScene::m_bIsPlayVideo||Ext_IsRecordBegin == true)
 	{
 		return;
 	}
+	if (m_curMsg == m_oldMsg)
+	{
+		return;
+	}
+	m_oldMsg = m_curMsg;
 	if(m_curMsg == 3)
 	{
 		Ext_IsRecordBegin = true;

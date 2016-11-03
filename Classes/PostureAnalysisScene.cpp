@@ -20,11 +20,7 @@ PostureAnalysisScene::~PostureAnalysisScene(void)
 {
 	SerialMager::getInstence()->unLoadInstence();
 	m_bIsPlayVideo = false;
-	if (m_pFrontDemoVideoLayer)
-	{
-		m_pFrontDemoVideoLayer->ReSetVideo();
-	}
-	m_pFrontMovieVideoLayer->ReSetVideo();
+	
 	if (Ext_cameraNum == 2)
 	{
 		if (m_pFrontDemoVideoLayer)
@@ -35,8 +31,25 @@ PostureAnalysisScene::~PostureAnalysisScene(void)
 		{
 			m_pSideDemoVideoLayer->ReSetVideo();
 		}
-		m_pFrontMovieVideoLayer->ReSetVideo();
-		m_pSideMovieVideoLayer->ReSetVideo();
+		if(m_pFrontMovieVideoLayer)
+		{
+			m_pFrontMovieVideoLayer->ReSetVideo();
+		}
+		if(m_pSideMovieVideoLayer)
+		{
+			m_pSideMovieVideoLayer->ReSetVideo();
+		}
+	}
+	else
+	{
+		if (m_pFrontDemoVideoLayer)
+		{
+			m_pFrontDemoVideoLayer->ReSetVideo();
+		}
+		if(m_pFrontMovieVideoLayer)
+		{
+			m_pFrontMovieVideoLayer->ReSetVideo();
+		}
 	}
 }
 //场景的创建函数
@@ -650,7 +663,11 @@ void PostureAnalysisScene::Update(float dt)
 	//		GolfXIMager::m_IsHitBall = false;
 	//	}
 	//}
-	if(!Ext_IsDigitTrak)
+	if(Ext_IsDigitTrak)
+	{
+		websocketMager::getInstence()->socketUpdate();
+	}
+	else
 	{
 		SerialMager::getInstence()->SeriaUpdate();
 	}
@@ -956,22 +973,26 @@ void PostureAnalysisScene::QuitSystem()
 	if (m_pFrontMovieVideoLayer)
 	{
 		m_pFrontMovieVideoLayer->m_Camera->Destructor();
+		this->removeChild(m_pFrontMovieVideoLayer);
 		delete m_pFrontMovieVideoLayer;
 		m_pFrontMovieVideoLayer = NULL;
 	}
 	if (m_pSideMovieVideoLayer)
 	{
 		m_pSideMovieVideoLayer->m_Camera->Destructor();
+		this->removeChild(m_pSideMovieVideoLayer);
 		delete m_pSideMovieVideoLayer;
 		m_pSideMovieVideoLayer = NULL;
 	}
 	if (m_pFrontDemoVideoLayer)
 	{
+		this->removeChild(m_pFrontDemoVideoLayer);
 		delete m_pFrontDemoVideoLayer;
 		m_pFrontDemoVideoLayer = NULL;
 	}
 	if (m_pSideDemoVideoLayer)
 	{
+		this->removeChild(m_pSideDemoVideoLayer);
 		delete m_pSideDemoVideoLayer;
 		m_pSideDemoVideoLayer = NULL;
 	}

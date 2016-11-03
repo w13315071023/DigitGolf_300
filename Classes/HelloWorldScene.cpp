@@ -38,7 +38,7 @@ bool HelloWorld::init()
 		m_curGender = GENDER_MAN;
 		m_isBeginButtonOn = false;
 		m_isEndButtonOn = false;
-		m_bIsTurnCamera = false;
+		m_bIsTurnCamera = true;
 		
         m_pCueTtpeArr[0] = CCMenuItemImage::create(
 										"HomeUI/yihaomu.png",
